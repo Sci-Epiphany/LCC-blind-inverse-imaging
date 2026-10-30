@@ -59,3 +59,7 @@ materialized in both production samplers.
 `grad(0.5 ||e||^2) = J^T e` for a linear observation residual and a Gaussian
 prior residual. This is an implementation/mathematics consistency test; the
 stability propositions are not claimed to be the source of benchmark gains.
+
+The linear branch already generates a simple kernel from Gaussian noise using
+its own kernel diffusion score model. BKSE KernelWizard is an alternative
+nonlinear operator decoder, not the only component that generates a kernel.
