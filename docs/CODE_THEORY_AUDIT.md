@@ -54,3 +54,8 @@ The general signed-residual control objective is broader than the explicit
 score decomposition implemented by the benchmark. The paper therefore treats
 `J^T e` as the unifying analysis, not as a claim that every Jacobian block is
 materialized in both production samplers.
+
+`tests/test_residual_gradient.py` verifies
+`grad(0.5 ||e||^2) = J^T e` for a linear observation residual and a Gaussian
+prior residual. This is an implementation/mathematics consistency test; the
+stability propositions are not claimed to be the source of benchmark gains.
