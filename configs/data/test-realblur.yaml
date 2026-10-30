@@ -1,0 +1,5 @@
+name: image
+root: 'dataset/test-realblur/realblur_n'
+resolution: 256
+start_id: 0
+end_id: 10
