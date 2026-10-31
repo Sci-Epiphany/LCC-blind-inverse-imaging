@@ -86,6 +86,7 @@ task:
       reg_terms:
         lamb: 20.0
         beta: 2000000.0
+      kernel_regularizer: pnp
     operator:
       name: blind_blur
       kernel_size: 64

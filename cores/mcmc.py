@@ -239,7 +239,7 @@ class MCMCSampler(nn.Module):
     """
 
     def __init__(self, num_steps, lr, tau=0.01, lr_min_ratio=0.01, prior_solver='gaussian', prior_sigma_min=1e-2,
-                 mc_algo='langevin', momentum=0.9, reg_terms='none'):
+                 mc_algo='langevin', momentum=0.9, reg_terms='none', kernel_regularizer='pnp'):
         super().__init__()
         self.num_steps = num_steps
         self.lr = lr
@@ -251,6 +251,7 @@ class MCMCSampler(nn.Module):
         self.momentum = momentum
         self.lamb = reg_terms['lamb']  # 3e1
         self.beta = reg_terms['beta']  # 8e6
+        self.kernel_regularizer = kernel_regularizer
 
     def score_fn(self, x, x0hat, model_dict, xt, operator, measurement, sigma, kernel_denoiser):
         r"""
@@ -280,7 +281,13 @@ class MCMCSampler(nn.Module):
 
         # # --- Step 1: HQS auxiliary variable update ---
         with torch.no_grad():
-            res = regularization_step(kernel_tmp,self.lamb,self.beta,denoiser=kernel_denoiser,how='l1')
+            res = regularization_step(
+                kernel_tmp,
+                self.lamb,
+                self.beta,
+                denoiser=kernel_denoiser,
+                how=self.kernel_regularizer,
+            )
         # --- Step 2: compute reg gradient from quadratic penalty term ---  k and res have a small gap
         reg_grad = -(self.beta * (kernel_tmp - res) * Eng)
         # Compute terms for each component

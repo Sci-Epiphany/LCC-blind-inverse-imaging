@@ -44,6 +44,10 @@ The recovered configurations specify:
 - The nonlinear text no longer claims that linear and nonlinear branches share
   one literal inference controller. They share the formulation and outer
   anneal, but have task-specific operator solutions.
+- The linear kernel regularizer is now an explicit configuration variable.
+  The paper default is PnP, matching the component ablation and selected
+  method. The earlier retained source hard-coded L1 despite loading the PnP
+  denoiser.
 - Files and experiments from `revision_2026/unified_v13_20261022`, including
   rotation, aberration, compound-blur, cross-domain, and spatial-kernel tests,
   are excluded from this article and from the clean code release.
@@ -63,3 +67,7 @@ stability propositions are not claimed to be the source of benchmark gains.
 The linear branch already generates a simple kernel from Gaussian noise using
 its own kernel diffusion score model. BKSE KernelWizard is an alternative
 nonlinear operator decoder, not the only component that generates a kernel.
+
+On eight paired seeds and four images, correcting the regularizer to PnP
+improves PSNR by +1.6285 dB (95% interval [+1.3673,+1.8989], 31 wins/1 loss)
+over L1 while reducing mean kernel MSE by about 9.1%.

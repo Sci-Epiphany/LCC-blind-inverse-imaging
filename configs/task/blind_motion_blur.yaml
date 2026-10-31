@@ -16,6 +16,7 @@ pixel:
     reg_terms:
       lamb: 35        # 35               # 5e-1
       beta: 2e7       # 2e7              # 4.6e6
+    kernel_regularizer: pnp
 
   operator:
     name: blind_blur

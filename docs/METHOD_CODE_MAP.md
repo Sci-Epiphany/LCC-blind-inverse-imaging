@@ -26,3 +26,7 @@ control-theoretic interpretation. The benchmark code realizes the correction
 through the explicit data, prior, and regularization terms in `score_fn`; it
 does not explicitly materialize every Jacobian block from the generic
 formulation.
+
+For the linear branch, `task.pixel.mcmc_sampler_config.kernel_regularizer`
+selects the HQS kernel regularizer. The paper default is `pnp`; `l1` and
+`l2` remain available only for controlled ablation.
