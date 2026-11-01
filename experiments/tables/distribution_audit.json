@@ -1,0 +1,1014 @@
+{
+  "protocol": {
+    "aggregation": "all available per-image rows",
+    "success_threshold_db": 10.0,
+    "ci": "95% nonparametric bootstrap of the mean, 4000 draws",
+    "failure_policy": "do not exclude failed cases from the all-sample mean"
+  },
+  "summaries": [
+    {
+      "benchmark": "Gaussian",
+      "method": "BKSE",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\BKSE\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 18.69517,
+      "psnr_std": 2.0690193738822265,
+      "psnr_median": 18.60805,
+      "psnr_p10": 16.05914,
+      "psnr_min": 15.1549,
+      "psnr_max": 24.0714,
+      "psnr_ci_low": 18.288878750000002,
+      "psnr_ci_high": 19.105744375,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.499439,
+      "lpips_mean": 0.408304,
+      "kernel_mse_mean": 0.0
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "BlindDPS",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\blinddps_eval_result.md",
+      "n": 100,
+      "psnr_mean": 24.434362,
+      "psnr_std": 1.6547995121331165,
+      "psnr_median": 24.5049,
+      "psnr_p10": 22.59118,
+      "psnr_min": 18.6369,
+      "psnr_max": 28.7942,
+      "psnr_ci_low": 24.1146563,
+      "psnr_ci_high": 24.74443905,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.7631,
+      "lpips_mean": 0.236618,
+      "kernel_mse_mean": 1.059e-05
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "DeblurGAN",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\DeblurGANv2\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 25.330438,
+      "psnr_std": 1.7173471785157481,
+      "psnr_median": 25.16865,
+      "psnr_p10": 22.911170000000002,
+      "psnr_min": 22.1388,
+      "psnr_max": 29.5545,
+      "psnr_ci_low": 24.99190975,
+      "psnr_ci_high": 25.6800876,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.752808,
+      "lpips_mean": 0.336477,
+      "kernel_mse_mean": 0.00016001
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "DeepRFT",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\DeepRFT\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 25.411471,
+      "psnr_std": 1.6579448332375235,
+      "psnr_median": 25.3667,
+      "psnr_p10": 23.36508,
+      "psnr_min": 21.8891,
+      "psnr_max": 29.8866,
+      "psnr_ci_low": 25.091292399999997,
+      "psnr_ci_high": 25.733267850000004,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.7566350000000001,
+      "lpips_mean": 0.33053,
+      "kernel_mse_mean": 0.0
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "DMPlug",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\DMPlug\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 23.889299,
+      "psnr_std": 2.9442508567883614,
+      "psnr_median": 24.401699999999998,
+      "psnr_p10": 20.93962,
+      "psnr_min": 14.1552,
+      "psnr_max": 29.8187,
+      "psnr_ci_low": 23.287094675000002,
+      "psnr_ci_high": 24.44639525,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.734657,
+      "lpips_mean": 0.312364,
+      "kernel_mse_mean": 0.00016001
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "FastDiffEM",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\fastem_eval_result.md",
+      "n": 100,
+      "psnr_mean": 12.339964,
+      "psnr_std": 6.69470163603308,
+      "psnr_median": 9.89785,
+      "psnr_p10": 7.60381,
+      "psnr_min": 4.3567,
+      "psnr_max": 29.4939,
+      "psnr_ci_low": 11.046618800000001,
+      "psnr_ci_high": 13.683543100000001,
+      "success_10db": 48,
+      "success_10db_rate": 0.48,
+      "ssim_mean": 0.386296,
+      "lpips_mean": 0.529711,
+      "kernel_mse_mean": 3.233e-05
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "FFTFormer",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\FFTFormer\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 23.295034,
+      "psnr_std": 1.3276164337804803,
+      "psnr_median": 23.1829,
+      "psnr_p10": 21.603019999999997,
+      "psnr_min": 20.4,
+      "psnr_max": 26.8074,
+      "psnr_ci_low": 23.03064255,
+      "psnr_ci_high": 23.557779099999998,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.761526,
+      "lpips_mean": 0.316627,
+      "kernel_mse_mean": 0.0
+    },
+    {
+      "benchmark": "Gaussian",
+      "method": "SelfDeblur",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Gaussian_deblur\\SelfDeblur\\results_eval_result.md",
+      "n": 90,
+      "psnr_mean": 16.607405555555555,
+      "psnr_std": 2.1959330824332266,
+      "psnr_median": 16.402500000000003,
+      "psnr_p10": 13.84737,
+      "psnr_min": 12.6339,
+      "psnr_max": 23.4575,
+      "psnr_ci_low": 16.161710972222224,
+      "psnr_ci_high": 17.058178388888887,
+      "success_10db": 90,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.2744977777777778,
+      "lpips_mean": 0.5456333333333333,
+      "kernel_mse_mean": 8.07e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "BKSE",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\BKSE\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 20.040018,
+      "psnr_std": 2.5405303301232207,
+      "psnr_median": 20.0691,
+      "psnr_p10": 16.95127,
+      "psnr_min": 13.948,
+      "psnr_max": 28.3254,
+      "psnr_ci_low": 19.69861525,
+      "psnr_ci_high": 20.3922459625,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.588553,
+      "lpips_mean": 0.5104025,
+      "kernel_mse_mean": 0.000170205
+    },
+    {
+      "benchmark": "Motion",
+      "method": "BlindDPS",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\BlindDPS\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 19.802158,
+      "psnr_std": 3.084466490794802,
+      "psnr_median": 19.387500000000003,
+      "psnr_p10": 16.11353,
+      "psnr_min": 13.7299,
+      "psnr_max": 29.7553,
+      "psnr_ci_low": 19.3877492875,
+      "psnr_ci_high": 20.233165824999997,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.6039705,
+      "lpips_mean": 0.3368935,
+      "kernel_mse_mean": 1.9735e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "DeblurGAN",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\DeblurGAN2\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 21.190674,
+      "psnr_std": 3.1826862375867337,
+      "psnr_median": 20.63425,
+      "psnr_p10": 17.64747,
+      "psnr_min": 14.3283,
+      "psnr_max": 32.3214,
+      "psnr_ci_low": 20.752950437499997,
+      "psnr_ci_high": 21.633151412500002,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.640646,
+      "lpips_mean": 0.391268,
+      "kernel_mse_mean": 6.051e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "DeepRFT",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\DeepRFT\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 22.929901,
+      "psnr_std": 3.977956496644854,
+      "psnr_median": 22.6799,
+      "psnr_p10": 17.85515,
+      "psnr_min": 14.7162,
+      "psnr_max": 33.2269,
+      "psnr_ci_low": 22.379457750000004,
+      "psnr_ci_high": 23.482302975000003,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.7028185,
+      "lpips_mean": 0.307967,
+      "kernel_mse_mean": 6.051e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "DMPlug",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\DMPlug\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 18.429883,
+      "psnr_std": 3.46945956117246,
+      "psnr_median": 18.53105,
+      "psnr_p10": 14.1564,
+      "psnr_min": 9.321,
+      "psnr_max": 31.2947,
+      "psnr_ci_low": 17.9554426625,
+      "psnr_ci_high": 18.9019612375,
+      "success_10db": 199,
+      "success_10db_rate": 0.995,
+      "ssim_mean": 0.541772,
+      "lpips_mean": 0.437646,
+      "kernel_mse_mean": 0.000170205
+    },
+    {
+      "benchmark": "Motion",
+      "method": "FastDiffEM",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\FastEM\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 13.2905835,
+      "psnr_std": 7.77608703614985,
+      "psnr_median": 14.4367,
+      "psnr_p10": 4.5604,
+      "psnr_min": 2.6147,
+      "psnr_max": 33.2644,
+      "psnr_ci_low": 12.232914962499999,
+      "psnr_ci_high": 14.3270443,
+      "success_10db": 105,
+      "success_10db_rate": 0.525,
+      "ssim_mean": 0.308449,
+      "lpips_mean": 0.5212795,
+      "kernel_mse_mean": 2.9225e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "FFTFormer",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\FFTFormer\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 19.325946,
+      "psnr_std": 2.6901441042226715,
+      "psnr_median": 19.00425,
+      "psnr_p10": 16.388550000000002,
+      "psnr_min": 13.5061,
+      "psnr_max": 28.6147,
+      "psnr_ci_low": 18.956378899999997,
+      "psnr_ci_high": 19.707656162499998,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.6040405,
+      "lpips_mean": 0.404245,
+      "kernel_mse_mean": 6.051e-05
+    },
+    {
+      "benchmark": "Motion",
+      "method": "SelfDeblur",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Motion_deblur\\SelfDeblur\\results_eval_result.md",
+      "n": 200,
+      "psnr_mean": 17.0687985,
+      "psnr_std": 2.486972416824873,
+      "psnr_median": 16.5431,
+      "psnr_p10": 14.15411,
+      "psnr_min": 11.987,
+      "psnr_max": 26.9933,
+      "psnr_ci_low": 16.72565725,
+      "psnr_ci_high": 17.4204010375,
+      "success_10db": 200,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.33507,
+      "lpips_mean": 0.5006315,
+      "kernel_mse_mean": 6.051e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "BKSE",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\BKSE\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 23.381082,
+      "psnr_std": 1.9908177622464593,
+      "psnr_median": 23.65505,
+      "psnr_p10": 20.56849,
+      "psnr_min": 20.0043,
+      "psnr_max": 28.7404,
+      "psnr_ci_low": 22.9937902,
+      "psnr_ci_high": 23.774923049999998,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.668145,
+      "lpips_mean": 0.40941,
+      "kernel_mse_mean": 0.00019678
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "BlindDPS",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\BlindDPS\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 12.311266,
+      "psnr_std": 6.622268013939333,
+      "psnr_median": 9.8268,
+      "psnr_p10": 7.65969,
+      "psnr_min": 4.8523,
+      "psnr_max": 32.099,
+      "psnr_ci_low": 11.053621750000001,
+      "psnr_ci_high": 13.6327691,
+      "success_10db": 42,
+      "success_10db_rate": 0.42,
+      "ssim_mean": 0.377106,
+      "lpips_mean": 0.501968,
+      "kernel_mse_mean": 3.139e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "DeblurGAN",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\DeblurGAN2\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 27.270787,
+      "psnr_std": 3.0946692230238435,
+      "psnr_median": 27.0354,
+      "psnr_p10": 23.84009,
+      "psnr_min": 20.58,
+      "psnr_max": 35.9193,
+      "psnr_ci_low": 26.66799375,
+      "psnr_ci_high": 27.869675949999998,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.79691,
+      "lpips_mean": 0.264125,
+      "kernel_mse_mean": 5.707e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "DeepRFT",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\DeepRFT\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 27.697082,
+      "psnr_std": 2.5225746667395197,
+      "psnr_median": 27.8457,
+      "psnr_p10": 24.491650000000003,
+      "psnr_min": 20.8215,
+      "psnr_max": 34.6387,
+      "psnr_ci_low": 27.204600300000003,
+      "psnr_ci_high": 28.22234525,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.81955,
+      "lpips_mean": 0.247722,
+      "kernel_mse_mean": 5.707e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "DMPlug",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\DMPlug\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 23.6289,
+      "psnr_std": 4.316240015638612,
+      "psnr_median": 24.1007,
+      "psnr_p10": 17.10625,
+      "psnr_min": 14.2596,
+      "psnr_max": 34.6193,
+      "psnr_ci_low": 22.789019075000002,
+      "psnr_ci_high": 24.452286225,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.686543,
+      "lpips_mean": 0.330105,
+      "kernel_mse_mean": 0.00019678
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "FastDiffEM",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\FastEM\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 14.995721,
+      "psnr_std": 8.92932305155654,
+      "psnr_median": 14.91845,
+      "psnr_p10": 5.1597100000000005,
+      "psnr_min": 2.9059,
+      "psnr_max": 32.801,
+      "psnr_ci_low": 13.262456299999998,
+      "psnr_ci_high": 16.7565541,
+      "success_10db": 53,
+      "success_10db_rate": 0.53,
+      "ssim_mean": 0.363808,
+      "lpips_mean": 0.490135,
+      "kernel_mse_mean": 3.139e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "FFTFormer",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\FFTFormer\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 23.585519,
+      "psnr_std": 2.6222821043775975,
+      "psnr_median": 23.3391,
+      "psnr_p10": 20.12717,
+      "psnr_min": 18.7711,
+      "psnr_max": 29.7154,
+      "psnr_ci_low": 23.080404175,
+      "psnr_ci_high": 24.10154785,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.756862,
+      "lpips_mean": 0.282377,
+      "kernel_mse_mean": 5.707e-05
+    },
+    {
+      "benchmark": "Nonlinear",
+      "method": "SelfDeblur",
+      "source": "G:\\workspace\\BlindDAPS\\Experiment\\Comparisons\\Nonlinear_deblur\\SelfDeblur\\results_eval_result.md",
+      "n": 100,
+      "psnr_mean": 17.134344,
+      "psnr_std": 2.1401201972468744,
+      "psnr_median": 16.9957,
+      "psnr_p10": 14.84386,
+      "psnr_min": 12.0455,
+      "psnr_max": 23.34,
+      "psnr_ci_low": 16.7062313,
+      "psnr_ci_high": 17.560122375000002,
+      "success_10db": 100,
+      "success_10db_rate": 1.0,
+      "ssim_mean": 0.319196,
+      "lpips_mean": 0.487912,
+      "kernel_mse_mean": 5.707e-05
+    }
+  ],
+  "paired": {
+    "Gaussian:BKSE-BlindDPS": {
+      "n": 100,
+      "mean_delta_psnr": -5.739192,
+      "left_win_rate": 0.02,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-DMPlug": {
+      "n": 100,
+      "mean_delta_psnr": -5.194129,
+      "left_win_rate": 0.06,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -6.635268,
+      "left_win_rate": 0.01,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -6.7163010000000005,
+      "left_win_rate": 0.0,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": -4.599864,
+      "left_win_rate": 0.03,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 6.355206,
+      "left_win_rate": 0.82,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BKSE-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 2.1730333333333336,
+      "left_win_rate": 0.8222222222222222,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-DMPlug": {
+      "n": 100,
+      "mean_delta_psnr": 0.545063,
+      "left_win_rate": 0.55,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -0.8960760000000001,
+      "left_win_rate": 0.19,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -0.9771090000000001,
+      "left_win_rate": 0.19,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 1.1393280000000001,
+      "left_win_rate": 0.94,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 12.094398,
+      "left_win_rate": 0.83,
+      "tie_rate": 0.0
+    },
+    "Gaussian:BlindDPS-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 7.788664444444445,
+      "left_win_rate": 0.9888888888888889,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DMPlug-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -1.441139,
+      "left_win_rate": 0.23,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DMPlug-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -1.522172,
+      "left_win_rate": 0.21,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DMPlug-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 0.5942650000000002,
+      "left_win_rate": 0.78,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DMPlug-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 11.549335,
+      "left_win_rate": 0.83,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DMPlug-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 7.211516666666666,
+      "left_win_rate": 0.9777777777777777,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeblurGAN-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -0.08103300000000005,
+      "left_win_rate": 0.34,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeblurGAN-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 2.035404,
+      "left_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeblurGAN-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 12.990474,
+      "left_win_rate": 0.83,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeblurGAN-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 8.742327777777778,
+      "left_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeepRFT-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 2.1164370000000003,
+      "left_win_rate": 0.98,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeepRFT-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 13.071507,
+      "left_win_rate": 0.85,
+      "tie_rate": 0.0
+    },
+    "Gaussian:DeepRFT-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 8.80485,
+      "left_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "Gaussian:FFTFormer-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 10.95507,
+      "left_win_rate": 0.82,
+      "tie_rate": 0.0
+    },
+    "Gaussian:FFTFormer-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": 6.698737777777778,
+      "left_win_rate": 0.9888888888888889,
+      "tie_rate": 0.0
+    },
+    "Gaussian:FastDiffEM-SelfDeblur": {
+      "n": 90,
+      "mean_delta_psnr": -3.94149,
+      "left_win_rate": 0.2,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-BlindDPS": {
+      "n": 200,
+      "mean_delta_psnr": 0.23786000000000004,
+      "left_win_rate": 0.61,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-DMPlug": {
+      "n": 200,
+      "mean_delta_psnr": 1.610135,
+      "left_win_rate": 0.8,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-DeblurGAN": {
+      "n": 200,
+      "mean_delta_psnr": -1.1506560000000001,
+      "left_win_rate": 0.165,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-DeepRFT": {
+      "n": 200,
+      "mean_delta_psnr": -2.8898829999999998,
+      "left_win_rate": 0.13,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-FFTFormer": {
+      "n": 200,
+      "mean_delta_psnr": 0.7140719999999999,
+      "left_win_rate": 0.885,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 6.7494345,
+      "left_win_rate": 0.745,
+      "tie_rate": 0.0
+    },
+    "Motion:BKSE-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 2.9712195,
+      "left_win_rate": 0.905,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-DMPlug": {
+      "n": 200,
+      "mean_delta_psnr": 1.372275,
+      "left_win_rate": 0.67,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-DeblurGAN": {
+      "n": 200,
+      "mean_delta_psnr": -1.388516,
+      "left_win_rate": 0.14,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-DeepRFT": {
+      "n": 200,
+      "mean_delta_psnr": -3.127743,
+      "left_win_rate": 0.095,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-FFTFormer": {
+      "n": 200,
+      "mean_delta_psnr": 0.4762119999999999,
+      "left_win_rate": 0.63,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 6.5115745,
+      "left_win_rate": 0.73,
+      "tie_rate": 0.0
+    },
+    "Motion:BlindDPS-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 2.7333594999999997,
+      "left_win_rate": 0.84,
+      "tie_rate": 0.0
+    },
+    "Motion:DMPlug-DeblurGAN": {
+      "n": 200,
+      "mean_delta_psnr": -2.760791,
+      "left_win_rate": 0.08,
+      "tie_rate": 0.0
+    },
+    "Motion:DMPlug-DeepRFT": {
+      "n": 200,
+      "mean_delta_psnr": -4.500018,
+      "left_win_rate": 0.095,
+      "tie_rate": 0.0
+    },
+    "Motion:DMPlug-FFTFormer": {
+      "n": 200,
+      "mean_delta_psnr": -0.896063,
+      "left_win_rate": 0.385,
+      "tie_rate": 0.0
+    },
+    "Motion:DMPlug-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 5.1392995,
+      "left_win_rate": 0.665,
+      "tie_rate": 0.0
+    },
+    "Motion:DMPlug-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 1.3610844999999998,
+      "left_win_rate": 0.7,
+      "tie_rate": 0.0
+    },
+    "Motion:DeblurGAN-DeepRFT": {
+      "n": 200,
+      "mean_delta_psnr": -1.7392269999999999,
+      "left_win_rate": 0.24,
+      "tie_rate": 0.0
+    },
+    "Motion:DeblurGAN-FFTFormer": {
+      "n": 200,
+      "mean_delta_psnr": 1.864728,
+      "left_win_rate": 0.945,
+      "tie_rate": 0.0
+    },
+    "Motion:DeblurGAN-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 7.9000905,
+      "left_win_rate": 0.78,
+      "tie_rate": 0.0
+    },
+    "Motion:DeblurGAN-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 4.1218755,
+      "left_win_rate": 0.93,
+      "tie_rate": 0.0
+    },
+    "Motion:DeepRFT-FFTFormer": {
+      "n": 200,
+      "mean_delta_psnr": 3.603955,
+      "left_win_rate": 0.955,
+      "tie_rate": 0.0
+    },
+    "Motion:DeepRFT-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 9.6393175,
+      "left_win_rate": 0.855,
+      "tie_rate": 0.0
+    },
+    "Motion:DeepRFT-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 5.8611025,
+      "left_win_rate": 0.965,
+      "tie_rate": 0.0
+    },
+    "Motion:FFTFormer-FastDiffEM": {
+      "n": 200,
+      "mean_delta_psnr": 6.0353625,
+      "left_win_rate": 0.715,
+      "tie_rate": 0.0
+    },
+    "Motion:FFTFormer-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": 2.2571475,
+      "left_win_rate": 0.845,
+      "tie_rate": 0.0
+    },
+    "Motion:FastDiffEM-SelfDeblur": {
+      "n": 200,
+      "mean_delta_psnr": -3.778215,
+      "left_win_rate": 0.395,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-BlindDPS": {
+      "n": 100,
+      "mean_delta_psnr": 11.069816,
+      "left_win_rate": 0.84,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-DMPlug": {
+      "n": 100,
+      "mean_delta_psnr": -0.24781800000000032,
+      "left_win_rate": 0.3,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -3.889705,
+      "left_win_rate": 0.02,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -4.316,
+      "left_win_rate": 0.03,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": -0.2044370000000002,
+      "left_win_rate": 0.55,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 8.385361,
+      "left_win_rate": 0.76,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BKSE-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": 6.246738,
+      "left_win_rate": 0.98,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-DMPlug": {
+      "n": 100,
+      "mean_delta_psnr": -11.317634,
+      "left_win_rate": 0.11,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -14.959521,
+      "left_win_rate": 0.0,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -15.385816,
+      "left_win_rate": 0.02,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": -11.274253,
+      "left_win_rate": 0.16,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": -2.6844550000000003,
+      "left_win_rate": 0.51,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:BlindDPS-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": -4.823078,
+      "left_win_rate": 0.2,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DMPlug-DeblurGAN": {
+      "n": 100,
+      "mean_delta_psnr": -3.6418869999999997,
+      "left_win_rate": 0.06,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DMPlug-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -4.068182,
+      "left_win_rate": 0.12,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DMPlug-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 0.043381000000000114,
+      "left_win_rate": 0.74,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DMPlug-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 8.633179,
+      "left_win_rate": 0.76,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DMPlug-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": 6.494556,
+      "left_win_rate": 0.88,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeblurGAN-DeepRFT": {
+      "n": 100,
+      "mean_delta_psnr": -0.42629499999999987,
+      "left_win_rate": 0.34,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeblurGAN-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 3.6852679999999998,
+      "left_win_rate": 0.98,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeblurGAN-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 12.275066,
+      "left_win_rate": 0.91,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeblurGAN-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": 10.136443,
+      "left_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeepRFT-FFTFormer": {
+      "n": 100,
+      "mean_delta_psnr": 4.111563,
+      "left_win_rate": 0.98,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeepRFT-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 12.701361,
+      "left_win_rate": 0.91,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:DeepRFT-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": 10.562738,
+      "left_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:FFTFormer-FastDiffEM": {
+      "n": 100,
+      "mean_delta_psnr": 8.589798,
+      "left_win_rate": 0.77,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:FFTFormer-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": 6.451175,
+      "left_win_rate": 0.98,
+      "tie_rate": 0.0
+    },
+    "Nonlinear:FastDiffEM-SelfDeblur": {
+      "n": 100,
+      "mean_delta_psnr": -2.138623,
+      "left_win_rate": 0.47,
+      "tie_rate": 0.0
+    }
+  },
+  "ours_historical_diagnostic": {
+    "source": "G:\\workspace\\BlindDAPS\\Experiment\\Gaussian.txt",
+    "note": "Historical four-block progress log.  Each block contains fewer than the 100-image benchmark, so it is used only as a stability diagnostic and never as the table-of-record mean.",
+    "blocks": [
+      {
+        "run": 0,
+        "n": 32,
+        "psnr_mean": 24.7965625,
+        "psnr_std": 1.8858297400862438,
+        "psnr_min": 14.58,
+        "success_20db": 31
+      },
+      {
+        "run": 1,
+        "n": 32,
+        "psnr_mean": 25.04875,
+        "psnr_std": 0.5699712163785117,
+        "psnr_min": 23.16,
+        "success_20db": 32
+      },
+      {
+        "run": 2,
+        "n": 32,
+        "psnr_mean": 25.0815625,
+        "psnr_std": 0.585742634263334,
+        "psnr_min": 22.39,
+        "success_20db": 32
+      },
+      {
+        "run": 3,
+        "n": 32,
+        "psnr_mean": 25.0734375,
+        "psnr_std": 0.5213240917066366,
+        "psnr_min": 22.76,
+        "success_20db": 32
+      }
+    ],
+    "all_n": 128,
+    "all_psnr_mean": 25.000078125,
+    "all_psnr_std": 1.0667594738958188,
+    "all_success_20db_rate": 0.9921875
+  }
+}

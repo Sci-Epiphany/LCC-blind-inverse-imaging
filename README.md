@@ -3,6 +3,8 @@
 Reference implementation for the paper **Latent Control Consistency for Blind
 Inverse Imaging**.
 
+Code repository: <https://github.com/Sci-Epiphany/LCC-blind-inverse-imaging>
+
 This repository contains the code used by the reported Gaussian, motion, and
 KernelWizard nonlinear deblurring experiments. It is a curated research
 release: datasets, checkpoints, generated samples, notebooks, and local IDE
@@ -26,6 +28,12 @@ solutions and regularization. See [docs/METHOD_CODE_MAP.md](docs/METHOD_CODE_MAP
 The optional slow-operator controller discussed as an extension in the paper
 is **not** the implementation used for the main tables. Files from the
 separate spatial-inconsistency/aberration study are not included here.
+
+For the linear branch, `task.pixel.mcmc_sampler_config.kernel_regularizer`
+selects `pnp`, `l1`, or `l2`. Paper configurations use `pnp`; the earlier
+retained source loaded the FFDNet denoiser but hard-coded the L1 branch. The
+release makes that choice explicit and includes a controlled PnP-versus-L1
+ablation.
 
 ## Installation
 
@@ -112,6 +120,13 @@ Run the source-only smoke test without loading model checkpoints:
 python -m pytest -q tests
 python scripts/check_release.py
 ```
+
+## Additional experiments
+
+`experiments/` contains the launch scripts and compact results for the
+PnP-versus-L1 audit, annealing-schedule comparison, cross-kernel validation,
+fixed-input full rerun, KernelWizard proposal diagnostic, and automatic
+`lr_k`/`tau` search. See `experiments/README.md`.
 
 ## Reporting and aggregation
 

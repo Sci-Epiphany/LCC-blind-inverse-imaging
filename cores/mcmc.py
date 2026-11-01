@@ -200,6 +200,8 @@ from .trajectory import Trajectory
 
 def regularization_step(k, lamb, beta, denoiser=None, how='l1'):
     _, _, n, p = k.shape
+    if how not in {'l0', 'l1', 'l2', 'pnp'}:
+        raise ValueError(f"Unsupported kernel regularizer: {how}")
     # k = k / (k.sum(dim=(-2, -1), keepdim=True) + 1e-12)
     if how == 'l0':
         threshold = np.sqrt(lamb / beta)
@@ -215,6 +217,8 @@ def regularization_step(k, lamb, beta, denoiser=None, how='l1'):
 
     elif how == 'pnp':
         if not lamb == 0:
+            if denoiser is None:
+                raise ValueError("PnP regularization requires a kernel denoiser")
             sigma_d = torch.ones_like(k)[:, :1, :, :] * (np.sqrt(lamb / beta))
             res = denoiser(torch.cat((k, sigma_d), axis=1))
         else:

@@ -1,0 +1,60 @@
+{
+  "summary": [
+    {
+      "variant": "baseline 200/100, ODE 5",
+      "n_seeds": 8,
+      "n_images_per_seed": 4,
+      "psnr_mean": 25.002513706684113,
+      "seed_mean_std": 0.2938178186203747,
+      "ssim_mean": 0.7213975936174393,
+      "lpips_mean": 0.21724860835820436,
+      "kmse_mean": 1.4924159756901645e-06
+    },
+    {
+      "variant": "outer 400, MCMC 50, 2x step",
+      "n_seeds": 8,
+      "n_images_per_seed": 4,
+      "psnr_mean": 24.689929485321045,
+      "seed_mean_std": 0.21456822969602304,
+      "ssim_mean": 0.7190989814698696,
+      "lpips_mean": 0.2192718875594437,
+      "kmse_mean": 1.4964513574966531e-06
+    },
+    {
+      "variant": "ODE 10, MCMC 50",
+      "n_seeds": 3,
+      "n_images_per_seed": 4,
+      "psnr_mean": 24.830591678619385,
+      "seed_mean_std": 0.41931308506670534,
+      "ssim_mean": 0.7096260736385981,
+      "lpips_mean": 0.21054145197073618,
+      "kmse_mean": 1.5198767944942422e-06
+    }
+  ],
+  "paired": [
+    {
+      "variant": "outer 400, MCMC 50, 2x step",
+      "seeds": 8,
+      "n_pairs": 32,
+      "delta_psnr": -0.3125842213630676,
+      "delta_psnr_std": 1.0711157250509047,
+      "delta_ci_low": -0.6641983389854431,
+      "delta_ci_high": 0.06958937644958496,
+      "wins": 10,
+      "losses": 22,
+      "mean_kmse_ratio": 1.0028467762121689
+    },
+    {
+      "variant": "ODE 10, MCMC 50",
+      "seeds": 3,
+      "n_pairs": 12,
+      "delta_psnr": -0.009548187255859375,
+      "delta_psnr_std": 1.0293866577288298,
+      "delta_ci_low": -0.6043359438578287,
+      "delta_ci_high": 0.5668290456136068,
+      "wins": 7,
+      "losses": 5,
+      "mean_kmse_ratio": 1.0217689762506432
+    }
+  ]
+}

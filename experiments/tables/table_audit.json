@@ -1,0 +1,1744 @@
+{
+  "source": {
+    "comparison": "G:\\workspace\\TCI_reject\\LCC_revision\\experiments\\results\\distribution_audit.csv",
+    "lcc": "G:\\workspace\\TCI_reject\\LCC_revision\\experiments\\results\\ldcc_full_metrics.csv",
+    "nonreference": "G:\\workspace\\TCI_reject\\LCC_revision\\experiments\\source_data\\NR_IQA_results.csv",
+    "ablation": "G:\\workspace\\TCI_reject\\LCC_revision\\experiments\\source_data\\super_parameter.xlsx"
+  },
+  "checks": [
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "SelfDeblur",
+      "expected": [
+        16.61,
+        0.2745,
+        0.5456,
+        8.1e-05
+      ],
+      "actual": [
+        16.607405555555555,
+        0.2744977777777778,
+        0.5456333333333333,
+        8.07e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "DeblurGAN",
+      "expected": [
+        25.33,
+        0.7528,
+        0.3365,
+        null
+      ],
+      "actual": [
+        25.330438,
+        0.752808,
+        0.336477,
+        0.00016001
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "BKSE",
+      "expected": [
+        18.7,
+        0.4994,
+        0.4083,
+        null
+      ],
+      "actual": [
+        18.69517,
+        0.499439,
+        0.408304,
+        0.0
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "FFTFormer",
+      "expected": [
+        23.3,
+        0.7615,
+        0.3166,
+        null
+      ],
+      "actual": [
+        23.295034,
+        0.761526,
+        0.316627,
+        0.0
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "DeepRFT",
+      "expected": [
+        25.41,
+        0.7566,
+        0.3305,
+        null
+      ],
+      "actual": [
+        25.411471,
+        0.7566350000000001,
+        0.33053,
+        0.0
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "BlindDPS",
+      "expected": [
+        24.43,
+        0.7631,
+        0.2366,
+        1.06e-05
+      ],
+      "actual": [
+        24.434362,
+        0.7631,
+        0.236618,
+        1.059e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "FastDiffEM",
+      "expected": [
+        12.34,
+        0.3863,
+        0.5297,
+        3.23e-05
+      ],
+      "actual": [
+        12.339964,
+        0.386296,
+        0.529711,
+        3.233e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "DMPlug",
+      "expected": [
+        23.89,
+        0.7347,
+        0.3124,
+        0.00016
+      ],
+      "actual": [
+        23.889299,
+        0.734657,
+        0.312364,
+        0.00016001
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Gaussian",
+      "method": "LCC",
+      "expected": [
+        25.18,
+        0.7327,
+        0.2232,
+        2.205e-06
+      ],
+      "actual": [
+        25.178145191669465,
+        0.7327060417085886,
+        0.22316601613536477,
+        2.204837819022032e-06
+      ],
+      "source": "ldcc_full_metrics.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "SelfDeblur",
+      "expected": [
+        17.07,
+        0.3351,
+        0.5006,
+        6.05e-05
+      ],
+      "actual": [
+        17.0687985,
+        0.33507,
+        0.5006315,
+        6.051e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "DeblurGAN",
+      "expected": [
+        21.19,
+        0.6406,
+        0.3913,
+        null
+      ],
+      "actual": [
+        21.190674,
+        0.640646,
+        0.391268,
+        6.051e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "BKSE",
+      "expected": [
+        20.04,
+        0.5886,
+        0.5104,
+        null
+      ],
+      "actual": [
+        20.040018,
+        0.588553,
+        0.5104025,
+        0.000170205
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "FFTFormer",
+      "expected": [
+        19.33,
+        0.604,
+        0.4042,
+        null
+      ],
+      "actual": [
+        19.325946,
+        0.6040405,
+        0.404245,
+        6.051e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "DeepRFT",
+      "expected": [
+        22.93,
+        0.7028,
+        0.308,
+        null
+      ],
+      "actual": [
+        22.929901,
+        0.7028185,
+        0.307967,
+        6.051e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "BlindDPS",
+      "expected": [
+        19.8,
+        0.604,
+        0.3369,
+        1.97e-05
+      ],
+      "actual": [
+        19.802158,
+        0.6039705,
+        0.3368935,
+        1.9735e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "FastDiffEM",
+      "expected": [
+        13.29,
+        0.3084,
+        0.5213,
+        2.92e-05
+      ],
+      "actual": [
+        13.2905835,
+        0.308449,
+        0.5212795,
+        2.9225e-05
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "DMPlug",
+      "expected": [
+        18.43,
+        0.5418,
+        0.4376,
+        0.000171
+      ],
+      "actual": [
+        18.429883,
+        0.541772,
+        0.437646,
+        0.000170205
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "linear",
+      "group": "Motion",
+      "method": "LCC",
+      "expected": [
+        20.09,
+        0.5696,
+        0.3519,
+        4.203e-06
+      ],
+      "actual": [
+        20.0878770983219,
+        0.56957820026204,
+        0.351930416431278,
+        4.20252524676812e-06
+      ],
+      "source": "ldcc_full_metrics.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "SelfDeblur",
+      "expected": [
+        17.1343,
+        0.4879,
+        0.3192
+      ],
+      "actual": [
+        17.134344,
+        0.487912,
+        0.319196
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "DeblurGAN",
+      "expected": [
+        27.2708,
+        0.2641,
+        0.7969
+      ],
+      "actual": [
+        27.270787,
+        0.264125,
+        0.79691
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "BKSE",
+      "expected": [
+        23.3811,
+        0.4094,
+        0.6681
+      ],
+      "actual": [
+        23.381082,
+        0.40941,
+        0.668145
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "FFTFormer",
+      "expected": [
+        23.5855,
+        0.2824,
+        0.7569
+      ],
+      "actual": [
+        23.585519,
+        0.282377,
+        0.756862
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "DeepRFT",
+      "expected": [
+        27.6971,
+        0.2477,
+        0.8195
+      ],
+      "actual": [
+        27.697082,
+        0.247722,
+        0.81955
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "BlindDPS",
+      "expected": [
+        12.3113,
+        0.502,
+        0.3771
+      ],
+      "actual": [
+        12.311266,
+        0.501968,
+        0.377106
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "FastDiffEM",
+      "expected": [
+        14.9957,
+        0.4901,
+        0.3638
+      ],
+      "actual": [
+        14.995721,
+        0.490135,
+        0.363808
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "DMPlug",
+      "expected": [
+        23.6289,
+        0.3301,
+        0.6865
+      ],
+      "actual": [
+        23.6289,
+        0.330105,
+        0.686543
+      ],
+      "source": "distribution_audit.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonlinear",
+      "group": "FFHQ",
+      "method": "LCC",
+      "expected": [
+        23.6856,
+        0.2669,
+        0.702
+      ],
+      "actual": [
+        23.68555510520935,
+        0.26689281525090336,
+        0.7020363249629736
+      ],
+      "source": "ldcc_full_metrics.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "SelfDeblur",
+      "expected": [
+        7.21,
+        5.372,
+        0.0893
+      ],
+      "actual": [
+        7.21,
+        5.372,
+        0.08935
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "DeblurGAN",
+      "expected": [
+        7.006,
+        4.162,
+        0.1477
+      ],
+      "actual": [
+        7.006,
+        4.162,
+        0.1477
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "BKSE",
+      "expected": [
+        6.516,
+        5.69,
+        0.1048
+      ],
+      "actual": [
+        6.516,
+        5.69,
+        0.1048
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "FFTFormer",
+      "expected": [
+        7.874,
+        3.722,
+        0.1693
+      ],
+      "actual": [
+        7.874,
+        3.722,
+        0.1693
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "DeepRFT",
+      "expected": [
+        8.7,
+        3.657,
+        0.1373
+      ],
+      "actual": [
+        8.7,
+        3.657,
+        0.1373
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "BlindDPS",
+      "expected": [
+        9.057,
+        4.659,
+        0.2313
+      ],
+      "actual": [
+        9.057,
+        4.659,
+        0.2313
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "FastDiffEM",
+      "expected": [
+        10.14,
+        4.85,
+        0.1827
+      ],
+      "actual": [
+        10.14,
+        4.85,
+        0.1827
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "DMPlug",
+      "expected": [
+        9.947,
+        3.173,
+        0.1212
+      ],
+      "actual": [
+        9.947,
+        3.173,
+        0.1212
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "nonreference",
+      "group": "ImageNet",
+      "method": "LCC",
+      "expected": [
+        7.476,
+        5.163,
+        0.1539
+      ],
+      "actual": [
+        7.476,
+        5.163,
+        0.1539
+      ],
+      "source": "NR_IQA_results.csv",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "Single branch",
+      "expected": [
+        10.2448,
+        2.1533,
+        34.0
+      ],
+      "actual": [
+        10.2448,
+        2.15333,
+        34.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "Single branch + HQS",
+      "expected": [
+        10.9856,
+        2.15179e-06,
+        36.0
+      ],
+      "actual": [
+        10.9856,
+        2.15179e-06,
+        36.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "Dual parallel",
+      "expected": [
+        23.6779,
+        2.0685e-06,
+        37.0
+      ],
+      "actual": [
+        23.6779,
+        2.0685e-06,
+        37.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "DP + HQS + l1",
+      "expected": [
+        23.6789,
+        2.0685e-06,
+        40.0
+      ],
+      "actual": [
+        23.6789,
+        2.0685e-06,
+        40.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "DP + HQS + l2",
+      "expected": [
+        23.6788,
+        2.06857e-06,
+        40.0
+      ],
+      "actual": [
+        23.6788,
+        2.06857e-06,
+        40.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "ablation",
+      "group": "Gaussian development",
+      "method": "DP + HQS + PnP",
+      "expected": [
+        25.1036,
+        2.04749e-06,
+        61.0
+      ],
+      "actual": [
+        25.1036,
+        2.04749e-06,
+        61.0
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_lpips",
+      "method": "B2",
+      "expected": [
+        0.2329
+      ],
+      "actual": [
+        0.232907
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_lpips",
+      "method": "C2",
+      "expected": [
+        0.2275
+      ],
+      "actual": [
+        0.22754
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_lpips",
+      "method": "D2",
+      "expected": [
+        0.2261
+      ],
+      "actual": [
+        0.226095
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_lpips",
+      "method": "E2",
+      "expected": [
+        0.2314
+      ],
+      "actual": [
+        0.231431
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_lpips",
+      "method": "F2",
+      "expected": [
+        0.235
+      ],
+      "actual": [
+        0.234962
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_kmse",
+      "method": "B3",
+      "expected": [
+        2.07018e-06
+      ],
+      "actual": [
+        2.07018e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_kmse",
+      "method": "C3",
+      "expected": [
+        2.05704e-06
+      ],
+      "actual": [
+        2.05704e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_kmse",
+      "method": "D3",
+      "expected": [
+        1.998e-06
+      ],
+      "actual": [
+        1.998e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_kmse",
+      "method": "E3",
+      "expected": [
+        2.04727e-06
+      ],
+      "actual": [
+        2.04727e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_x_kmse",
+      "method": "F3",
+      "expected": [
+        2.04872e-06
+      ],
+      "actual": [
+        2.04872e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_lpips",
+      "method": "B8",
+      "expected": [
+        0.2353
+      ],
+      "actual": [
+        0.235309
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_lpips",
+      "method": "C8",
+      "expected": [
+        0.2263
+      ],
+      "actual": [
+        0.226312
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_lpips",
+      "method": "D8",
+      "expected": [
+        0.2261
+      ],
+      "actual": [
+        0.226095
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_lpips",
+      "method": "E8",
+      "expected": [
+        0.2288
+      ],
+      "actual": [
+        0.22881
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_lpips",
+      "method": "F8",
+      "expected": [
+        0.2307
+      ],
+      "actual": [
+        0.230718
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_kmse",
+      "method": "B9",
+      "expected": [
+        2.04528e-06
+      ],
+      "actual": [
+        2.04528e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_kmse",
+      "method": "C9",
+      "expected": [
+        2.04944e-06
+      ],
+      "actual": [
+        2.04944e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_kmse",
+      "method": "D9",
+      "expected": [
+        1.998e-06
+      ],
+      "actual": [
+        1.998e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_kmse",
+      "method": "E9",
+      "expected": [
+        2.05255e-06
+      ],
+      "actual": [
+        2.05255e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "eta_k_kmse",
+      "method": "F9",
+      "expected": [
+        2.05308e-06
+      ],
+      "actual": [
+        2.05308e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_lpips",
+      "method": "B13",
+      "expected": [
+        0.2271
+      ],
+      "actual": [
+        0.227088
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_lpips",
+      "method": "C13",
+      "expected": [
+        0.227
+      ],
+      "actual": [
+        0.22698
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_lpips",
+      "method": "D13",
+      "expected": [
+        0.2261
+      ],
+      "actual": [
+        0.226095
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_lpips",
+      "method": "E13",
+      "expected": [
+        0.2263
+      ],
+      "actual": [
+        0.226292
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_lpips",
+      "method": "F13",
+      "expected": [
+        0.2298
+      ],
+      "actual": [
+        0.229835
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_kmse",
+      "method": "B14",
+      "expected": [
+        2.04854e-06
+      ],
+      "actual": [
+        2.04854e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_kmse",
+      "method": "C14",
+      "expected": [
+        2.04988e-06
+      ],
+      "actual": [
+        2.04988e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_kmse",
+      "method": "D14",
+      "expected": [
+        1.998e-06
+      ],
+      "actual": [
+        1.998e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_kmse",
+      "method": "E14",
+      "expected": [
+        2.05328e-06
+      ],
+      "actual": [
+        2.05328e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "sensitivity",
+      "group": "lambda_kmse",
+      "method": "F14",
+      "expected": [
+        2.05234e-06
+      ],
+      "actual": [
+        2.05234e-06
+      ],
+      "source": "super_parameter.xlsx",
+      "pass_": true
+    },
+    {
+      "table": "regularizer",
+      "group": "Gaussian multi-seed",
+      "method": "L1",
+      "expected": [
+        25.0025,
+        0.7214,
+        0.2172,
+        1.492e-06
+      ],
+      "actual": [
+        25.002513706684113,
+        0.7213975936174393,
+        0.21724860835820436,
+        1.4924159756901645e-06
+      ],
+      "source": "pnp_multiseed.csv",
+      "pass_": true
+    },
+    {
+      "table": "regularizer",
+      "group": "Gaussian multi-seed",
+      "method": "PnP",
+      "expected": [
+        26.631,
+        0.751,
+        0.205,
+        1.358e-06
+      ],
+      "actual": [
+        26.631028294563293,
+        0.7509980574250221,
+        0.20495880208909512,
+        1.3579188120615981e-06
+      ],
+      "source": "pnp_multiseed.csv",
+      "pass_": true
+    },
+    {
+      "table": "schedule",
+      "group": "Gaussian multi-seed",
+      "method": "baseline 200/100, ODE 5",
+      "expected": [
+        25.0025,
+        0.2938,
+        0.2172,
+        1.492e-06
+      ],
+      "actual": [
+        25.002513706684113,
+        0.2938178186203747,
+        0.21724860835820436,
+        1.4924159756901645e-06
+      ],
+      "source": "loop_multiseed_summary.csv",
+      "pass_": true
+    },
+    {
+      "table": "schedule",
+      "group": "Gaussian multi-seed",
+      "method": "outer 400, MCMC 50, 2x step",
+      "expected": [
+        24.6899,
+        0.2146,
+        0.2193,
+        1.496e-06
+      ],
+      "actual": [
+        24.689929485321045,
+        0.21456822969602304,
+        0.2192718875594437,
+        1.4964513574966531e-06
+      ],
+      "source": "loop_multiseed_summary.csv",
+      "pass_": true
+    },
+    {
+      "table": "proposal",
+      "group": "KernelWizard diagnostic",
+      "method": "one stochastic proposal",
+      "expected": [
+        20.2294,
+        0.525,
+        0.4841,
+        5.493
+      ],
+      "actual": [
+        20.229385137557983,
+        0.5250176712870598,
+        0.48409394174814224,
+        5.4930419921875
+      ],
+      "source": "proposal_tuning.csv",
+      "pass_": true
+    },
+    {
+      "table": "proposal",
+      "group": "KernelWizard diagnostic",
+      "method": "four proposals, deterministic mean",
+      "expected": [
+        17.2974,
+        0.4597,
+        0.5455,
+        1.545
+      ],
+      "actual": [
+        17.297385454177856,
+        0.4596673995256424,
+        0.5455259680747986,
+        1.5453993380069733
+      ],
+      "source": "proposal_tuning.csv",
+      "pass_": true
+    },
+    {
+      "table": "proposal",
+      "group": "KernelWizard diagnostic",
+      "method": "four proposals, 0.5x noise",
+      "expected": [
+        19.727,
+        0.5142,
+        0.4909,
+        2.635
+      ],
+      "actual": [
+        19.727048635482788,
+        0.5141674503684044,
+        0.4909477159380913,
+        2.634513556957245
+      ],
+      "source": "proposal_tuning.csv",
+      "pass_": true
+    },
+    {
+      "table": "proposal",
+      "group": "KernelWizard diagnostic",
+      "method": "four proposals, 1.0x noise",
+      "expected": [
+        19.4015,
+        0.4988,
+        0.5086,
+        5.728
+      ],
+      "actual": [
+        19.401484966278076,
+        0.49883243441581726,
+        0.5086375325918198,
+        5.727983593940735
+      ],
+      "source": "proposal_tuning.csv",
+      "pass_": true
+    },
+    {
+      "table": "cross-kernel PnP",
+      "group": "3 seeds",
+      "method": "PnP",
+      "expected": [
+        25.2441,
+        0.7356,
+        0.2228,
+        2.125e-06,
+        300
+      ],
+      "actual": [
+        25.24410135269165,
+        0.73557621717453,
+        0.22282014042139053,
+        2.1245415950943425e-06,
+        300
+      ],
+      "source": "full_pnp.json",
+      "pass_": true
+    },
+    {
+      "table": "fixed-input PnP",
+      "group": "Gaussian",
+      "method": "corrected PnP",
+      "expected": [
+        25.1781,
+        0.7327,
+        0.2232,
+        2.205e-06,
+        400
+      ],
+      "actual": [
+        25.178145191669465,
+        0.7327060417085886,
+        0.22316601613536477,
+        2.204837819022032e-06,
+        400
+      ],
+      "source": "fixed_kernel_pnp.json",
+      "pass_": true
+    },
+    {
+      "table": "fixed-input PnP",
+      "group": "Motion",
+      "method": "corrected PnP",
+      "expected": [
+        20.0879,
+        0.5696,
+        0.3519,
+        4.203e-06,
+        786
+      ],
+      "actual": [
+        20.087877098321915,
+        0.5695782002620399,
+        0.351930416431278,
+        4.202525246768119e-06,
+        786
+      ],
+      "source": "fixed_kernel_pnp.json",
+      "pass_": true
+    },
+    {
+      "table": "autotune",
+      "group": "Gaussian 4-image pilot",
+      "method": "GP-EI",
+      "expected": [
+        26.5444,
+        0.2018,
+        27.6135,
+        0.1897,
+        -0.3637,
+        1
+      ],
+      "actual": [
+        26.54435920715332,
+        0.2018040493130684,
+        27.613484382629395,
+        0.18968351930379868,
+        -0.3636816342671712,
+        1
+      ],
+      "source": "autotune_lrktau.json",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Gaussian",
+      "method": "DeepRFT",
+      "expected": [
+        -0.23,
+        -0.5,
+        0.03,
+        0.329
+      ],
+      "actual": [
+        -0.233325808330536,
+        -0.5032718050319673,
+        0.03181459906091666,
+        0.32882454634893676
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Gaussian",
+      "method": "DeblurGAN",
+      "expected": [
+        -0.15,
+        -0.38,
+        0.07,
+        0.403
+      ],
+      "actual": [
+        -0.15229280833053596,
+        -0.37749684843711867,
+        0.07392388242874139,
+        0.40342896597006617
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Gaussian",
+      "method": "BlindDPS",
+      "expected": [
+        0.74,
+        0.43,
+        1.1,
+        2.16e-06
+      ],
+      "actual": [
+        0.7437831916694642,
+        0.4323899565051081,
+        1.0980593553182603,
+        2.1582542412854836e-06
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Gaussian",
+      "method": "DMPlug",
+      "expected": [
+        1.29,
+        0.78,
+        1.86,
+        1.55e-05
+      ],
+      "actual": [
+        1.2888461916694645,
+        0.7798717654417991,
+        1.8555472444068908,
+        1.5463918491286687e-05
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Motion",
+      "method": "DeepRFT",
+      "expected": [
+        -2.84,
+        -3.47,
+        -2.27,
+        2.69e-17
+      ],
+      "actual": [
+        -2.8420239016780853,
+        -3.470787301762533,
+        -2.2734122757520203,
+        2.6866481463408912e-17
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Motion",
+      "method": "DeblurGAN",
+      "expected": [
+        -1.1,
+        -1.64,
+        -0.58,
+        0.000102
+      ],
+      "actual": [
+        -1.1027969016780856,
+        -1.639811864569855,
+        -0.5761194062813293,
+        0.00010180800510176352
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Motion",
+      "method": "BlindDPS",
+      "expected": [
+        0.29,
+        -0.24,
+        0.83,
+        0.0542
+      ],
+      "actual": [
+        0.2857190983219147,
+        -0.24454688348150244,
+        0.8306432352931501,
+        0.05417576688307774
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Motion",
+      "method": "DMPlug",
+      "expected": [
+        1.66,
+        1.07,
+        2.26,
+        2.07e-07
+      ],
+      "actual": [
+        1.6579940983219148,
+        1.0734573627745152,
+        2.2602856334650516,
+        2.0688293363881526e-07
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Nonlinear",
+      "method": "DeepRFT",
+      "expected": [
+        -4.01,
+        -4.52,
+        -3.53,
+        1.7e-17
+      ],
+      "actual": [
+        -4.0115268947906495,
+        -4.5216100501436225,
+        -3.5270880043684967,
+        1.7415252083634357e-17
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Nonlinear",
+      "method": "DeblurGAN",
+      "expected": [
+        -3.59,
+        -4.02,
+        -3.16,
+        5.6e-18
+      ],
+      "actual": [
+        -3.58523189479065,
+        -4.018936896251488,
+        -3.160829785940075,
+        5.596247901468035e-18
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Nonlinear",
+      "method": "FFTFormer",
+      "expected": [
+        0.1,
+        -0.38,
+        0.55,
+        0.258
+      ],
+      "actual": [
+        0.10003610520935048,
+        -0.3776499373785974,
+        0.5517840138169289,
+        0.2579671879817931
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "paired",
+      "group": "Nonlinear",
+      "method": "DMPlug",
+      "expected": [
+        0.06,
+        -0.71,
+        0.88,
+        0.509
+      ],
+      "actual": [
+        0.05665510520935038,
+        -0.7087700624193193,
+        0.8830657541980742,
+        0.5091522042708133
+      ],
+      "source": "paired_comparisons_fixed_pnp.csv",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Gaussian",
+      "method": "1-sample average",
+      "expected": [
+        25.162,
+        0.7303,
+        0.2237,
+        0.0,
+        0
+      ],
+      "actual": [
+        25.162062366008758,
+        0.7303333051502705,
+        0.2236697380617261,
+        0.0,
+        0
+      ],
+      "source": "remote_fixed_pnp_ensemble/gaussian/summary.json",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Gaussian",
+      "method": "2-sample average",
+      "expected": [
+        25.668,
+        0.7604,
+        0.2147,
+        0.506,
+        99
+      ],
+      "actual": [
+        25.66803764979045,
+        0.7604139244556426,
+        0.21465475699553893,
+        0.5059752837816873,
+        99
+      ],
+      "source": "remote_fixed_pnp_ensemble/gaussian/summary.json",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Gaussian",
+      "method": "4-sample average",
+      "expected": [
+        25.971,
+        0.7773,
+        0.2124,
+        0.809,
+        100
+      ],
+      "actual": [
+        25.971049194335937,
+        0.7773173522949218,
+        0.21237850815057754,
+        0.8089868283271789,
+        100
+      ],
+      "source": "remote_fixed_pnp_ensemble/gaussian/summary.json",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Motion",
+      "method": "1-sample average",
+      "expected": [
+        20.082,
+        0.5683,
+        0.3522,
+        0.0,
+        0
+      ],
+      "actual": [
+        20.082486728429796,
+        0.5682742247730493,
+        0.35216891531832517,
+        0.0,
+        0
+      ],
+      "source": "remote_fixed_pnp_ensemble/motion/summary.json",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Motion",
+      "method": "2-sample average",
+      "expected": [
+        20.86,
+        0.6105,
+        0.3421,
+        0.777,
+        200
+      ],
+      "actual": [
+        20.859610613187154,
+        0.6104886969923973,
+        0.3421384720442196,
+        0.7771238847573598,
+        200
+      ],
+      "source": "remote_fixed_pnp_ensemble/motion/summary.json",
+      "pass_": true
+    },
+    {
+      "table": "ensemble",
+      "group": "Motion",
+      "method": "4-sample average",
+      "expected": [
+        21.539,
+        0.6411,
+        0.3377,
+        1.456,
+        199
+      ],
+      "actual": [
+        21.53895320892334,
+        0.6410990305244922,
+        0.3377319635078311,
+        1.4564664804935454,
+        199
+      ],
+      "source": "remote_fixed_pnp_ensemble/motion/summary.json",
+      "pass_": true
+    }
+  ],
+  "passed": 102,
+  "failed": 0
+}

@@ -1,0 +1,33 @@
+{
+  "label": "gaussian_pnp_fixed",
+  "fusion": "equal-weight mean over all label-free subsets",
+  "summary": [
+    {
+      "samples": 1,
+      "images": 100,
+      "psnr": 25.162062366008758,
+      "ssim": 0.7303333051502705,
+      "lpips": 0.2236697380617261,
+      "delta_psnr": 0.0,
+      "wins": 0
+    },
+    {
+      "samples": 2,
+      "images": 100,
+      "psnr": 25.66803764979045,
+      "ssim": 0.7604139244556426,
+      "lpips": 0.21465475699553893,
+      "delta_psnr": 0.5059752837816873,
+      "wins": 99
+    },
+    {
+      "samples": 4,
+      "images": 100,
+      "psnr": 25.971049194335937,
+      "ssim": 0.7773173522949218,
+      "lpips": 0.21237850815057754,
+      "delta_psnr": 0.8089868283271789,
+      "wins": 100
+    }
+  ]
+}

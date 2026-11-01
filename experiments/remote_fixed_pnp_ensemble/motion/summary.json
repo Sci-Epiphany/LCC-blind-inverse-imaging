@@ -1,0 +1,33 @@
+{
+  "label": "motion_pnp_fixed",
+  "fusion": "equal-weight mean over all label-free subsets",
+  "summary": [
+    {
+      "samples": 1,
+      "images": 200,
+      "psnr": 20.082486728429796,
+      "ssim": 0.5682742247730493,
+      "lpips": 0.35216891531832517,
+      "delta_psnr": 0.0,
+      "wins": 0
+    },
+    {
+      "samples": 2,
+      "images": 200,
+      "psnr": 20.859610613187154,
+      "ssim": 0.6104886969923973,
+      "lpips": 0.3421384720442196,
+      "delta_psnr": 0.7771238847573598,
+      "wins": 200
+    },
+    {
+      "samples": 4,
+      "images": 200,
+      "psnr": 21.53895320892334,
+      "ssim": 0.6410990305244922,
+      "lpips": 0.3377319635078311,
+      "delta_psnr": 1.4564664804935454,
+      "wins": 199
+    }
+  ]
+}

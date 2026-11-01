@@ -112,7 +112,6 @@ class DAPS(nn.Module):
             if record:
                 self._record(xt, x0y, x0hat, sigma, x0hat_results, x0y_results)
         return xt
-
     def _record(self, xt, x0y, x0hat, sigma, x0hat_results, x0y_results):
         """Records the intermediate states during sampling."""
 

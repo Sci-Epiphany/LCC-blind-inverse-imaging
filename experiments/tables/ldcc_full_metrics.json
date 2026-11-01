@@ -1,0 +1,102 @@
+{
+  "protocol": {
+    "source": "Archived inputs plus the corrected PnP fixed-input rerun",
+    "aggregation": "All test images and all four retained stochastic runs",
+    "quality_metrics": "PSNR, SSIM, LPIPS, and kernel MSE from metrics.json; ensemble metrics from PNG files"
+  },
+  "benchmarks": [
+    {
+      "benchmark": "Gaussian",
+      "n_images": 100,
+      "n_runs": 4,
+      "n_samples": 400,
+      "psnr_mean": 25.178145191669465,
+      "psnr_std": 1.9595162903579866,
+      "lpips_mean": 0.22316601613536477,
+      "lpips_std": 0.047972041349498895,
+      "ssim_mean": 0.7327060417085886,
+      "ssim_std": 0.05281791443728467,
+      "kernel_mse_mean": 2.204837819022032e-06,
+      "kernel_mse_std": 1.8613440062517373e-09,
+      "success_10db": 400,
+      "success_10db_rate": 1.0,
+      "run_psnr_means": [
+        25.286148948669435,
+        25.08696904182434,
+        25.212678680419923,
+        25.12678409576416
+      ],
+      "run_psnr_stds": [
+        1.9083272059409737,
+        2.2344672089342383,
+        1.6414784830350162,
+        2.0302990125040594
+      ],
+      "png_pairs_validated": 400,
+      "stored_vs_png_psnr_max_diff": null,
+      "stored_vs_png_ssim_max_diff": null
+    },
+    {
+      "benchmark": "Motion",
+      "n_images": 200,
+      "n_runs": 4,
+      "n_samples": 800,
+      "psnr_mean": 20.0878770983219,
+      "psnr_std": 3.72273548235415,
+      "lpips_mean": 0.351930416431278,
+      "lpips_std": 0.130004124593028,
+      "ssim_mean": 0.56957820026204,
+      "ssim_std": 0.149076287281834,
+      "kernel_mse_mean": 4.20252524676812e-06,
+      "kernel_mse_std": 3.6626615464463e-06,
+      "success_10db": 786,
+      "success_10db_rate": 0.9825,
+      "run_psnr_means": [
+        20.5854050445557,
+        20.5000682067871,
+        20.2848554801941,
+        18.9811796617508
+      ],
+      "run_psnr_stds": [
+        3.16976396065746,
+        3.2474226216866,
+        3.79694571828206,
+        4.35253343372324
+      ],
+      "png_pairs_validated": 800,
+      "stored_vs_png_psnr_max_diff": null,
+      "stored_vs_png_ssim_max_diff": null
+    },
+    {
+      "benchmark": "Nonlinear",
+      "n_images": 100,
+      "n_runs": 4,
+      "n_samples": 400,
+      "psnr_mean": 23.68555510520935,
+      "psnr_std": 3.202235413706253,
+      "lpips_mean": 0.26689281525090336,
+      "lpips_std": 0.08633537851821893,
+      "ssim_mean": 0.7020363249629736,
+      "ssim_std": 0.09837259012092567,
+      "kernel_mse_mean": 5.245365930199623,
+      "kernel_mse_std": 3.1797864642035516,
+      "success_10db": 400,
+      "success_10db_rate": 1.0,
+      "run_psnr_means": [
+        23.56481773376465,
+        23.73855553627014,
+        23.824018297195433,
+        23.61482885360718
+      ],
+      "run_psnr_stds": [
+        3.3848170773140045,
+        3.1221099573450903,
+        2.9749631974319994,
+        3.3046516463488933
+      ],
+      "png_pairs_validated": 399,
+      "stored_vs_png_psnr_max_diff": 7.92507266998291,
+      "stored_vs_png_ssim_max_diff": 0.23744672536849976
+    }
+  ]
+}

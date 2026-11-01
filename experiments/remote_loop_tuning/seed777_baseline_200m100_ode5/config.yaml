@@ -1,0 +1,137 @@
+batch_size: 4
+data:
+  end_id: 4
+  name: image
+  resolution: 256
+  root: dataset/test-ffhq
+  start_id: 0
+gpu: 0
+image_eval_fn_list:
+- psnr
+- lpips
+- ssim
+kernel__eval_fn_list:
+- kernel_mse
+kernel_data:
+  intensity: 3.0
+  kernel_size: 64
+  name: gaussian_blur
+  sigma: 0.01
+kernel_model:
+  model_config:
+    attention_resolutions: 16
+    channel_mult: ''
+    class_cond: false
+    dropout: 0.0
+    grayscale: true
+    image_size: 64
+    learn_sigma: true
+    model_path: checkpoints/kernel_checkpoint.pt
+    num_channels: 64
+    num_head_channels: 64
+    num_heads: 4
+    num_heads_upsample: -1
+    num_res_blocks: 1
+    resblock_updown: true
+    use_checkpoint: false
+    use_fp16: false
+    use_new_attention_order: false
+    use_scale_shift_norm: true
+  name: ddpm
+model:
+  model_config:
+    attention_resolutions: 16
+    channel_mult: ''
+    class_cond: false
+    dropout: 0.0
+    image_size: 256
+    learn_sigma: true
+    model_path: checkpoints/ffhq256.pt
+    num_channels: 128
+    num_head_channels: 64
+    num_heads: 4
+    num_heads_upsample: -1
+    num_res_blocks: 1
+    resblock_updown: true
+    use_checkpoint: false
+    use_fp16: false
+    use_new_attention_order: false
+    use_scale_shift_norm: true
+  name: ddpm
+name: seed777_baseline_200m100_ode5
+num_runs: 1
+project_name: BlindDAPS
+sampler:
+  annealing_scheduler_config:
+    name: edm
+    num_steps: 200
+    sigma_max: 100
+    sigma_min: 0.1
+    timestep: poly-7
+  blind: true
+  diffusion_scheduler_config:
+    name: edm
+    num_steps: 5
+    sigma_min: 0.01
+    timestep: poly-7
+  latent: false
+  nonlinear: false
+save_dir: tuning_results
+save_samples: false
+save_traj: false
+save_traj_raw_data: false
+seed: 777
+show_eval: false
+task:
+  ldm:
+    mcmc_sampler_config:
+      lr: 2.7e-06
+      lr_min_ratio: 0.95
+      mc_algo: hmc
+      momentum: 0.95
+      num_steps: 35
+      prior_solver: gaussian
+      tau: 0.01
+    operator:
+      intensity: 3.0
+      kernel_size: 64
+      name: blind_blur
+      sigma: 0.05
+  pixel:
+    mcmc_sampler_config:
+      lr:
+        image: 5.0e-05
+        kernel: 4.0e-09
+      lr_min_ratio:
+        image: 0.01
+        kernel: 0.01
+      mc_algo: langevin
+      num_steps: 100
+      prior_solver:
+        image: gaussian
+        kernel: gaussian
+      reg_terms:
+        beta: 2000000
+        lamb: 20
+      tau: 0.02
+    operator:
+      intensity: 3.0
+      kernel_size: 64
+      name: blind_blur
+      sigma: 0.02
+  sd:
+    mcmc_sampler_config:
+      lr: 1.0e-05
+      lr_min_ratio: 1
+      mc_algo: hmc
+      momentum: 0.9
+      num_steps: 40
+      prior_solver: gaussian
+      tau: 0.01
+    operator:
+      intensity: 3.0
+      kernel_size: 64
+      name: blind_blur
+      sigma: 0.01
+task_group: pixel
+wandb: false

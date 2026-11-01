@@ -48,6 +48,10 @@ The recovered configurations specify:
   The paper default is PnP, matching the component ablation and selected
   method. The earlier retained source hard-coded L1 despite loading the PnP
   denoiser.
+- The inexact-descent proof now uses the standard conservative bound
+  `F+ <= F - eta/2 ||grad F||^2 + eta/2 eps^2` for
+  `eta <= 1/(2L)`. The previous coefficient was stronger than the stated
+  smoothness assumptions support.
 - Files and experiments from `revision_2026/unified_v13_20261022`, including
   rotation, aberration, compound-blur, cross-domain, and spatial-kernel tests,
   are excluded from this article and from the clean code release.
@@ -71,3 +75,14 @@ nonlinear operator decoder, not the only component that generates a kernel.
 On eight paired seeds and four images, correcting the regularizer to PnP
 improves PSNR by +1.6285 dB (95% interval [+1.3673,+1.8989], 31 wins/1 loss)
 over L1 while reducing mean kernel MSE by about 9.1%.
+
+The fixed-input full Gaussian rerun gives 25.1781 dB PSNR, 0.7327 SSIM,
+0.2232 LPIPS, and 2.2048e-6 kernel MSE. It improves image metrics over the
+archived implementation but slightly increases full-sample kernel MSE, so the
+paper reports this trade-off explicitly. Automatic GP search did not survive
+held-out seed validation and is therefore documented as a negative tuning
+result rather than used to select the main configuration.
+The fixed-input motion rerun reaches 20.0879 dB and 0.3519 LPIPS, slightly
+below the archived L1 implementation because its fourth run is a low outlier.
+The paper reports this domain-dependent outcome rather than claiming a
+regularizer improvement on every benchmark.
