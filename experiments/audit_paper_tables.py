@@ -110,6 +110,25 @@ PROPOSAL = {
     "four proposals, 1.0x noise": (19.4015, 0.4988, 0.5086, 5.728),
 }
 
+NONLINEAR_ABLATION = {
+    "original 50×20": (15.6170, 0.3697, 0.6366),
+    "BKSE input/sign fix": (19.1560, 0.4609, 0.5896),
+    "integrated kernel MCMC": (21.5424, 0.5165, 0.5425),
+    "image step 3e-5": (22.9883, 0.5782, 0.4563),
+    "100×50 schedule": (23.6011, 0.6075, 0.4117),
+}
+
+NONLINEAR_EXTRA = {
+    "100×50, image noise 1.0": (23.6011, 0.6075, 0.4117),
+    "image noise 0.5": (23.6174, 0.6116, 0.4097),
+    "image noise 0.1": (23.6401, 0.6131, 0.4091),
+    "image noise 0.0": (23.6267, 0.6129, 0.4092),
+    "observation-selected proposal": (23.5502, 0.6057, 0.4067),
+    "post-MCMC kernel reprojection": (23.5632, 0.6108, 0.4091),
+    "200×25 schedule": (23.0745, 0.5833, 0.4566),
+    "200×50 schedule": (23.5402, 0.6061, 0.4130),
+}
+
 CROSS_PNP = (25.2441, 0.7356, 0.2228, 2.125e-6, 300)
 FIXED_PNP = {
     "Gaussian initial": (25.2123, 0.7196, 0.2581, 2.887e-6, 100),
@@ -259,6 +278,44 @@ def main() -> None:
         )
         if not ok:
             errors.append(f"nonlinear {method}: {actual} != {expected}")
+
+    nonlinear_opt = json.loads(
+        (RESULTS / "nonlinear_optimization.json").read_text(encoding="utf-8")
+    )
+    nonlinear_checks = (
+        ("nonlinear ablation", "four-image mechanism", NONLINEAR_ABLATION,
+         nonlinear_opt["four_image_schedule_ablation"]),
+        ("nonlinear thermal", "four-image coupling", NONLINEAR_EXTRA,
+         nonlinear_opt["four_image_coupling_and_noise_ablation"]),
+    )
+    for table_name, group, expected_rows, actual_group in nonlinear_checks:
+        for label, expected in expected_rows.items():
+            row = actual_group[label]
+            actual = (row["psnr"], row["ssim"], row["lpips"])
+            ok = all(
+                close(value, reference, tolerance)
+                for value, reference, tolerance in zip(
+                    actual,
+                    expected,
+                    (0.0001, 0.0001, 0.0001),
+                    strict=True,
+                )
+            )
+            checks.append(
+                dict(
+                    table=table_name,
+                    group=group,
+                    method=label,
+                    expected=expected,
+                    actual=actual,
+                    source="nonlinear_optimization.json",
+                    pass_=ok,
+                )
+            )
+            if not ok:
+                errors.append(
+                    f"{table_name} {label}: {actual} != {expected}"
+                )
 
     nr_alias = {"FastDiffEM": "fastem", "BKSE": "bkse", "BlindDPS": "blind-dps", "DeblurGAN": "DeblurGAN2", "LCC": "daps", "DeepRFT": "deeprft", "FFTFormer": "fftformer"}
     for method, expected in NONREFERENCE.items():

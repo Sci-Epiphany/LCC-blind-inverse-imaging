@@ -22,8 +22,12 @@ class MCMCNLSampler(nn.Module):
         momentum (float): Momentum coefficient for HMC.
     """
 
-    def __init__(self, num_steps, lr, tau=0.01, lr_min_ratio=0.01, prior_solver='gaussian', prior_sigma_min=1e-2,
-                 mc_algo='langevin', momentum=0.9, reg_terms='none'):
+    def __init__(self, num_steps, lr, tau=0.01, lr_min_ratio=0.01,
+                 prior_solver='gaussian', prior_sigma_min=1e-2,
+                 mc_algo='langevin', momentum=0.9, reg_terms='none',
+                 kernel_prior_weight=1e5, kernel_trajectory='proposal',
+                 return_clean=False, kernel_noise_scale=1.0,
+                 image_noise_scale=1.0, auto_lr_kernel=False):
         super().__init__()
         self.num_steps = num_steps
         self.lr = lr
@@ -35,6 +39,12 @@ class MCMCNLSampler(nn.Module):
         self.momentum = momentum
         self.lamb = reg_terms['lamb']  # 3e1
         self.beta = reg_terms['beta']  # 8e6
+        self.kernel_prior_weight = kernel_prior_weight
+        self.kernel_trajectory = kernel_trajectory
+        self.return_clean = return_clean
+        self.kernel_noise_scale = kernel_noise_scale
+        self.image_noise_scale = image_noise_scale
+        self.auto_lr_kernel = auto_lr_kernel
 
     def score_fn(self, x, x0hat, model_dict, xt, operator, measurement, sigma):
         r"""
@@ -62,17 +72,21 @@ class MCMCNLSampler(nn.Module):
             res = regularization_step(x['kernel'], self.lamb, self.beta, how='l2')
         # --- Step 2: compute reg gradient from quadratic penalty term ---
         reg_grad = self.beta * (x['kernel'] - res)
+        tau = operator.sigma if self.tau is None else self.tau
 
         # Compute terms for each component
         score_dict = {}
 
         for key in xt.keys():
-            data_term = -data_fitting_grad[key] / self.tau ** 2
+            data_term = -data_fitting_grad[key] / tau ** 2
 
             if key == 'kernel':
-                # Compute kernel huber reg_grad
-                x0_term = (x0hat[key] - x[key]) * 1e5
-                score_dict[key] = data_term - reg_grad  - x0_term
+                # Descend the quadratic HQS residual and anchor to the
+                # observation-conditioned KernelWizard proposal.
+                kernel_anchor = (
+                    x0hat[key] - x[key]
+                ) * self.kernel_prior_weight
+                score_dict[key] = data_term - reg_grad + kernel_anchor
             else:
                 prior_term = self.get_prior_score(x[key], x0hat[key], xt[key], model_dict, sigma)
                 xt_term = (xt[key] - x[key]) / sigma ** 2
@@ -117,7 +131,18 @@ class MCMCNLSampler(nn.Module):
     def mc_update(self, x, cur_score, lr, epsilon):
         """ Performs a single Monte Carlo update step (Langevin or HMC)."""
         if self.mc_algo == 'langevin':
-            x_new = {key: x[key] + lr[key] * cur_score[key] + np.sqrt(2 * lr[key]) * epsilon[key] for key in x.keys()}
+            x_new = {}
+            for key in x.keys():
+                noise_scale = (
+                    self.kernel_noise_scale
+                    if key == 'kernel'
+                    else self.image_noise_scale
+                )
+                x_new[key] = (
+                    x[key]
+                    + lr[key] * cur_score[key]
+                    + noise_scale * np.sqrt(2 * lr[key]) * epsilon[key]
+                )
         elif self.mc_algo == 'hmc':  # (damping) hamiltonian monte carlo
             step_size = np.sqrt(lr)
             self.velocity = {key: self.momentum * self.velocity[key] + step_size * cur_score[key] + np.sqrt(
@@ -160,6 +185,11 @@ class MCMCNLSampler(nn.Module):
         if record:
             self.trajectory = {key: Trajectory() for key in xt.keys()}
 
+        if self.auto_lr_kernel:
+            coordinate_ratio = (
+                xt['image'][0].numel() / xt['kernel'][0].numel()
+            ) ** 0.5
+            self.lr['kernel'] = self.lr['image'] * coordinate_ratio
         lr = self.get_lr(ratio)
         # self.mc_prepare(x0hat, xt, model, operator, measurement, sigma)
         self.prepare_prior_score(x0hat['image'], xt['image'], model, sigma)

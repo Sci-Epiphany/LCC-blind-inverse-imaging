@@ -3,10 +3,10 @@ pixel:
   mcmc_sampler_config:
     num_steps: 100
     lr:
-      image: 1e-5
+      image: 3e-5
       kernel: 2e-9
 
-    tau: 0.02
+    tau: null
     lr_min_ratio:
       image: 0.01
       kernel: 0.01
@@ -15,11 +15,20 @@ pixel:
     reg_terms:
       lamb: 3e2
       beta: 2e7
+    kernel_prior_weight: 1e4
+    kernel_trajectory: mcmc
+    kernel_noise_scale: 0.1
+    image_noise_scale: 1.0
+    auto_lr_kernel: true
+    return_clean: true
 
   operator:
     name: blind_nonlinear_blur
     opt_yml_path: forward_operator/bkse/options/generate_blur/default.yml
     sigma: 0.02
+    proposal_mode: sample
+    proposal_candidates: 1
+    proposal_noise_scale: 1.0
 
 # latent diffusion model
 ldm:

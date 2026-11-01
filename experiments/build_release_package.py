@@ -97,6 +97,11 @@ SCRIPTS = [
     "run_remote_kernel_adaptive.sh",
     "run_remote_kernel_block.sh",
     "run_remote_motion_jacobian.sh",
+    "run_remote_nonlinear_ablation.sh",
+    "analyze_nonlinear_optimization.py",
+    "evaluate_repeated_run_fusion.py",
+    "evaluate_multiseed_image_fusion.py",
+    "inspect_kernelwizard_uncertainty.py",
 ]
 
 

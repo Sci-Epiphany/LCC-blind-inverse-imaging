@@ -593,12 +593,21 @@ class Nonlinear_DAPS(nn.Module):
             # 2. MCMC update
             x0y = self.mcmc_sampler.sample(xt, model_dict, x0hat, operator, measurement, sigma, step / self.annealing_scheduler.num_steps)
 
+            final_step = step == self.annealing_scheduler.num_steps - 2
+
             # 3. forward diffusion
             for key in xt.keys():
-                if step != self.annealing_scheduler.num_steps - 1 and key != 'kernel':
+                if final_step and self.mcmc_sampler.return_clean:
+                    xt[key] = x0y[key]
+                elif key != 'kernel':
                     xt[key] = x0y[key] + torch.randn_like(x0y[key]) * self.annealing_scheduler.sigma_steps[step + 1]
                 elif key == 'kernel':
-                    xt[key] = x0hat[key] + torch.randn_like(x0y[key]) * self.annealing_scheduler.sigma_steps[step + 1] #  /sigma + x0y[key] * (1-1/sigma)  +     # keep kernel not change
+                    kernel_base = (
+                        x0y[key]
+                        if self.mcmc_sampler.kernel_trajectory == 'mcmc'
+                        else x0hat[key]
+                    )
+                    xt[key] = kernel_base + torch.randn_like(x0y[key]) * self.annealing_scheduler.sigma_steps[step + 1]
                 else:
                     xt[key] = x0y[key]
 

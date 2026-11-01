@@ -26,6 +26,41 @@ The `trust_region` and `block_simplex` kernel-step modes in the sampler are
 retained as negative controls: their monotone local objectives destabilized
 the coupled image state, so they are not used by any headline result.
 
+## Nonlinear KernelWizard correction
+
+The release normalizes KernelWizard inputs to `[0, 1]`, treats the
+observation-conditioned kernel proposal as an attracting prior, and derives
+the nonlinear kernel step from the image/operator coordinate-size ratio.
+Kernel thermal noise is separately scaled.
+
+```bash
+bash run_remote_nonlinear_ablation.sh \
+  0 100 50 20 42 full100 mcmc true 1e4 0.1 2e-9 \
+  test-ffhq 8 sample 1 1 true 3e-5 null 2
+python analyze_nonlinear_optimization.py
+```
+
+The corrected full 100-image run reaches 24.6667 dB with one sample and
+24.9520 dB after two-sample fusion. A paired 20-image 200/100 audit reaches
+26.0851 dB versus 24.0788 dB for the old nonlinear implementation.
+Detailed results are stored under `lcc_opt_results/nonlinear/`.
+
+The follow-up thermal and coupling audit uses the same four RealBlur
+development images at `100/50`:
+
+```bash
+bash run_remote_nonlinear_ablation.sh 1 4 100 50 42 imgnoise01 \
+  mcmc true 1e4 0.1 2e-9 test-realblur 4 sample 1 1.0 true 3e-5 null 1 0.1
+python analyze_nonlinear_optimization.py
+```
+
+Reducing the image thermal-noise multiplier to `0.1` improves the four-seed
+PSNR mean from `22.7111` to `22.7317` dB, SSIM from `0.5845` to `0.5900`, and
+LPIPS from `0.4285` to `0.4258`. Because the gain is small, the headline
+100-image nonlinear result retains unit image noise. Observation-residual
+proposal selection, post-MCMC kernel reprojection, and `200/25` or `200/50`
+schedules all reduce PSNR and remain negative results.
+
 Archived K-MSE values produced by the old whole-batch normalization are not
 used. `recompute_kernel_metrics.py` normalizes each predicted and ground-truth
 kernel independently.

@@ -78,9 +78,16 @@ class Evaluator:
         table = Table('results')
         summary = {}
         for key in result_dicts.keys():
-            value = [f"{v:.3e}" if abs(v) < 1e-3 else f"{v:.6f}" for v in result_dicts[key][get_eval_fn_cmp(key)]]
+            # Multi-run evaluations are summarized by the per-image mean.
+            # Selecting the best run here would turn a stochastic mean into
+            # an optimistic best-of-N score.
+            metric_values = result_dicts[key]['mean']
+            value = [
+                f"{v:.3e}" if abs(v) < 1e-3 else f"{v:.6f}"
+                for v in metric_values
+            ]
             table.add_column(key, value)
-            summary[key] = f"{np.mean(result_dicts[key][get_eval_fn_cmp(key)]):.6g}"
+            summary[key] = f"{np.mean(metric_values):.6g}"
         # for average
         table.add_row(['' for _ in result_dicts.keys()])
         table.add_row(['avg' for _ in result_dicts.keys()])
@@ -90,9 +97,15 @@ class Evaluator:
 
     def log_wandb(self, result_dicts, batch_size):
         for s in range(batch_size):
-            log_dict = {key: result_dicts[key][get_eval_fn_cmp(key)][s] for key in result_dicts.keys()}
+            log_dict = {
+                key: result_dicts[key]['mean'][s]
+                for key in result_dicts.keys()
+            }
             wandb.log(log_dict)
-        log_dict = {key: np.mean(result_dicts[key][get_eval_fn_cmp(key)]) for key in result_dicts.keys()}
+        log_dict = {
+            key: np.mean(result_dicts[key]['mean'])
+            for key in result_dicts.keys()
+        }
         new_log_dict = {key + '_all': value for key, value in log_dict.items()}
         wandb.log(new_log_dict)
         return

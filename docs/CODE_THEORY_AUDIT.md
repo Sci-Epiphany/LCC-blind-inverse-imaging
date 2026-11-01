@@ -29,7 +29,7 @@ The recovered configurations specify:
 | Joint image/operator posterior correction | `cores/mcmc.py`: `MCMCSampler.score_fn`; `cores/mcmc_nl.py`: `MCMCNLSampler.score_fn` | aligned |
 | Coordinate-wise image and kernel steps | `get_lr` returns a separate rate for each component | aligned |
 | Linear kernel HQS and simplex projection | `MCMCSampler.score_fn`, `regularization_step`, `normalize_kernel` | aligned |
-| BKSE KernelWizard nonlinear operator | `forward_operator.NonlinearBlur` and `nonlinear_config.yaml` | aligned |
+| BKSE KernelWizard nonlinear operator | `forward_operator.BlindNonlinearBlur` and `configs/task/blind_nonlinear_blur.yaml` | aligned |
 | `N_A=200`, `N_ode=5`, `N=100` | three recovered configuration files in `experiments/source_data/` | aligned |
 | Signed residual-Jacobian theory | `BlindBlurOperator.gradient` and `MCMCSampler.score_fn` | kernel normalization Jacobian implemented explicitly |
 | Noise-calibrated likelihood | `MCMCSampler.score_fn` with `tau=null` | aligned with the forward-operator noise level |
@@ -67,6 +67,11 @@ The recovered configurations specify:
 - Thermal noise is separated from deterministic kernel-step scaling by a
   configurable multiplier; the likelihood temperature is tied to the known
   measurement noise.
+- KernelWizard received `[-1,1]` tensors although the upstream model is
+  trained on `[0,1]`. The correction restores the input domain and corrects
+  the nonlinear kernel-anchor sign.
+- The nonlinear kernel step is derived from the image step by the coordinate
+  size ratio `sqrt(N_x/N_k)` instead of using an unrelated absolute rate.
 
 ## Remaining limitation
 
@@ -95,3 +100,8 @@ The optimized 100-image Gaussian result reaches 27.5842 dB PSNR, 0.7934 SSIM,
 LPIPS after terminal refinement, but remains below the supervised PSNR leader.
 The paper reports this domain-dependent outcome rather than claiming a
 universal improvement.
+
+The corrected nonlinear path raises the paired 20-image full-schedule mean
+from 24.0788 to 26.0851 dB. On all 100 images, one sample reaches 24.6667 dB
+and two-sample fusion reaches 24.9520 dB. The latter improves PSNR by
+1.2664 dB over the previous LCC-N row, while LPIPS remains 0.0068 worse.

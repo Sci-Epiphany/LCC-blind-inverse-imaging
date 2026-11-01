@@ -44,6 +44,17 @@ coordinate branches and one output from each. It obtains 27.5842 dB PSNR,
 100-image fixed-input benchmark. Motion reaches 21.1626 dB after the
 consistency refinement; the remaining supervised-domain gap is reported.
 
+The nonlinear release maps KernelWizard inputs back to its trained `[0,1]`
+domain, treats the proposal as an attracting prior, and derives the kernel
+step from `eta_x * sqrt(N_x/N_k)`. On all 100 nonlinear images, the corrected
+single sample reaches 24.6667 dB and two-sample fusion reaches 24.9520 dB;
+the paired 20-image full-schedule audit reaches 26.0851 versus 24.0788 dB.
+A four-seed thermal-noise ablation improves the small development pilot from
+22.7111 to 22.7317 dB at a `0.1` image-noise multiplier. This gain is too
+small for the headline benchmark. Observation-residual proposal selection and
+post-MCMC kernel reprojection regress PSNR, so both are kept as documented
+negative results.
+
 ## Installation
 
 Python 3.10 and a recent PyTorch build with CUDA are recommended.

@@ -458,9 +458,14 @@ class NonlinearBlur(Operator):
 
 @register_operator(name='blind_nonlinear_blur')
 class BlindNonlinearBlur(Operator):
-    def __init__(self, opt_yml_path, device='cuda', sigma=0.05):
+    def __init__(self, opt_yml_path, device='cuda', sigma=0.05,
+                 proposal_mode='sample', proposal_candidates=1,
+                 proposal_noise_scale=1.0):
         super().__init__(sigma)
         self.device = device
+        self.proposal_mode = proposal_mode
+        self.proposal_candidates = proposal_candidates
+        self.proposal_noise_scale = proposal_noise_scale
         self.blur_model = self.prepare_nonlinear_blur_model(opt_yml_path)
         self.blur_model.requires_grad_(False)
 
@@ -507,9 +512,36 @@ class BlindNonlinearBlur(Operator):
         :param data: $x_0$ and y
         :return: Kernel solution
         """
-        kernel_mean, kernel_sigma = self.blur_model(x_0, y)
-        kernel = kernel_mean + kernel_sigma * torch.randn_like(kernel_mean)
-        return kernel
+        # KernelWizard is trained on [0, 1] images. The diffusion state and
+        # measurement are stored in [-1, 1], so passing them directly silently
+        # applies the operator outside its training domain.
+        x_0_unit = ((x_0 + 1.0) / 2.0).clamp(0, 1)
+        y_unit = ((y + 1.0) / 2.0).clamp(0, 1)
+        kernel_mean, kernel_sigma = self.blur_model(x_0_unit, y_unit)
+        if self.proposal_mode == 'mean':
+            return kernel_mean
+        if self.proposal_mode not in ('sample', 'select'):
+            raise ValueError(
+                f"Unsupported KernelWizard proposal mode: {self.proposal_mode}"
+            )
+        proposals = [
+            kernel_mean
+            + self.proposal_noise_scale
+            * kernel_sigma
+            * torch.randn_like(kernel_mean)
+            for _ in range(self.proposal_candidates)
+        ]
+        if self.proposal_mode == 'select':
+            # Reweight KernelWizard particles with the observation likelihood.
+            # This uses only x_0 and the measured image, never a clean target.
+            residuals = torch.stack([
+                self.loss({'image': x_0, 'kernel': proposal}, y)
+                for proposal in proposals
+            ])
+            best = residuals.argmin(dim=0)
+            batch = torch.arange(best.shape[0], device=best.device)
+            return torch.stack(proposals)[best, batch]
+        return torch.stack(proposals).mean(0)
 
     def gradient(self, x, y, return_loss=False):
         """
