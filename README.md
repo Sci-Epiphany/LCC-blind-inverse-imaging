@@ -19,6 +19,9 @@ The reported benchmark follows a decoupled procedure:
 2. Joint Langevin/MCMC steps apply measurement feedback, a prior anchor, and
    kernel regularization.
 3. Fresh noise maps the corrected states to the next annealing level.
+4. A fixed-image HQS solve refines the kernel, followed by a fixed-kernel
+   regularized image solve.
+5. Equal-weight fusion combines two label-free coordinate solutions.
 
 The linear branch is implemented by `BlindDAPS` in `sampler.py`; the nonlinear
 branch is implemented by `Nonlinear_DAPS`. Their image updates share the same
@@ -29,11 +32,17 @@ The optional slow-operator controller discussed as an extension in the paper
 is **not** the implementation used for the main tables. Files from the
 separate spatial-inconsistency/aberration study are not included here.
 
-For the linear branch, `task.pixel.mcmc_sampler_config.kernel_regularizer`
-selects `pnp`, `l1`, or `l2`. Paper configurations use `pnp`; the earlier
-retained source loaded the FFDNet denoiser but hard-coded the L1 branch. The
-release makes that choice explicit and includes a controlled PnP-versus-L1
-ablation.
+For the linear branch, `kernel_regularizer` selects `pnp`, `l1`, or `l2`.
+`kernel_data_gradient: raw` differentiates through nonnegativity and simplex
+normalization; `normalized` retains the scale-separated coordinate used by the
+second fusion branch. The likelihood scale can be set to `null`, in which case
+the known forward-operator noise standard deviation is used.
+
+The optimized Gaussian entry in the paper uses two independently initialized
+coordinate branches and one output from each. It obtains 27.5842 dB PSNR,
+0.7934 SSIM, 0.1914 LPIPS, and 1.528e-7 per-kernel-normalized MSE on the
+100-image fixed-input benchmark. Motion reaches 21.1626 dB after the
+consistency refinement; the remaining supervised-domain gap is reported.
 
 ## Installation
 
@@ -80,12 +89,25 @@ Use the archived Hydra configuration corresponding to the desired benchmark.
 The core benchmark settings are:
 
 - probability-flow ODE steps: `5`;
-- annealing levels: `200`;
-- Langevin/MCMC steps per level: `100`;
+- normalized-coordinate schedule: `200` levels, `100` MCMC steps;
+- accelerated raw-coordinate schedule: `50` levels, `20` MCMC steps;
 - noise range: `sigma_max=100`, `sigma_min=0.1`;
-- four repeated outputs for LCC aggregation.
+- Gaussian image fusion uses one output from each coordinate branch.
 
-The original entry point is:
+The optimized fixed-input launcher is:
+
+```bash
+bash experiments/run_remote_kernel_ablation.sh \
+  4e-7 20 2000000 0.02 0 100 50 20 optimized 0.1 123
+```
+
+It writes the raw-coordinate branch. The normalized-coordinate branch uses
+`kernel_data_gradient=normalized`, `lr.kernel=4e-9`, and the `200/100`
+schedule. `experiments/refine_saved_kernels.py`,
+`experiments/evaluate_image_kernel_reconciliation.py`, and
+`experiments/evaluate_image_fusion.py` implement the remaining stages.
+
+The general entry point is:
 
 ```bash
 python posterior_sample.py \
@@ -123,17 +145,19 @@ python scripts/check_release.py
 
 ## Additional experiments
 
-`experiments/` contains the launch scripts and compact results for the
-PnP-versus-L1 audit, annealing-schedule comparison, cross-kernel validation,
-fixed-input full rerun, KernelWizard proposal diagnostic, and automatic
-`lr_k`/`tau` search. See `experiments/README.md`.
+`experiments/` contains the exact-Jacobian audit, terminal consistency
+refinement, two-branch fusion, PnP-versus-L1 audit, cross-kernel validation,
+KernelWizard proposal diagnostic, and the earlier automatic parameter search.
+See `experiments/README.md` and `experiments/lcc_opt_results/README.md`.
 
 ## Reporting and aggregation
 
 All reported full-reference means use every retained test image. Failed cases
-are not filtered out. LCC metrics average four stochastic runs per image before
-comparison. Per-image paired confidence intervals and failure-aware summaries
-are provided in the paper supplement.
+are not filtered out. The optimized Gaussian result fuses one independent
+output from each coordinate branch; motion retains four runs. Per-image paired
+confidence intervals and failure-aware summaries are provided in the paper
+supplement. Kernel MSE always normalizes each predicted and target kernel
+independently.
 
 ## Citation
 

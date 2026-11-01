@@ -28,9 +28,11 @@ and requires cross-seed wins.
 
 The tuning images are a small validation subset of FFHQ. Consequently, this
 procedure is appropriate for selecting development settings, not for
-per-image test-time adaptation. A production system should additionally
-estimate `tau` from the known measurement noise and use a normalized
-preconditioner to make absolute kernel-gradient scale less important.
+per-image test-time adaptation. The later implementation audit showed that
+this search inherited an unaccounted kernel-normalization Jacobian. The
+optimized release therefore fixes that Jacobian, sets `tau` from the known
+measurement noise, and separates deterministic step scaling from thermal noise.
+The old search is retained as a negative control rather than a selection rule.
 
 ## Completed search outcome
 

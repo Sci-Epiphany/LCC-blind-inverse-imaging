@@ -504,7 +504,9 @@ def main(args):
     if args.sampler['blind']:
         # Log metrics for 'kernel'
         norm_k = (full_samples['kernel'] * 0.5 + 0.5).clip(0, 1)
-        norm_k = norm_k/norm_k.sum()
+        norm_k = norm_k / norm_k.sum(
+            dim=(-2, -1), keepdim=True
+        ).clamp_min(1e-12)
     else:
         norm_k = full_samples['kernel']
 

@@ -242,8 +242,12 @@ class MCMCSampler(nn.Module):
         momentum (float): Momentum coefficient for HMC.
     """
 
-    def __init__(self, num_steps, lr, tau=0.01, lr_min_ratio=0.01, prior_solver='gaussian', prior_sigma_min=1e-2,
-                 mc_algo='langevin', momentum=0.9, reg_terms='none', kernel_regularizer='pnp'):
+    def __init__(self, num_steps, lr, tau=0.01, lr_min_ratio=0.01,
+                 prior_solver='gaussian', prior_sigma_min=1e-2,
+                 mc_algo='langevin', momentum=0.9, reg_terms='none',
+                 kernel_regularizer='pnp', kernel_step_mode='manual',
+                 kernel_trust_fraction=1e-2, kernel_line_search_steps=5,
+                 kernel_noise_scale=1.0, kernel_data_gradient='raw'):
         super().__init__()
         self.num_steps = num_steps
         self.lr = lr
@@ -256,6 +260,11 @@ class MCMCSampler(nn.Module):
         self.lamb = reg_terms['lamb']  # 3e1
         self.beta = reg_terms['beta']  # 8e6
         self.kernel_regularizer = kernel_regularizer
+        self.kernel_step_mode = kernel_step_mode
+        self.kernel_trust_fraction = kernel_trust_fraction
+        self.kernel_line_search_steps = kernel_line_search_steps
+        self.kernel_noise_scale = kernel_noise_scale
+        self.kernel_data_gradient = kernel_data_gradient
 
     def score_fn(self, x, x0hat, model_dict, xt, operator, measurement, sigma, kernel_denoiser):
         r"""
@@ -275,10 +284,16 @@ class MCMCSampler(nn.Module):
                 - Data-fitting loss.
         """
         # kernel_tmp = ((x['kernel'] + 1) / 2).clamp(0, 1)
-        kernel_tmp = F.relu((x['kernel'] + 1) / 2)
-        _, _, h, w = kernel_tmp.shape
-        Eng =  kernel_tmp.sum(axis=(-2, -1))[:, :, None, None].repeat(1, 1, h, w)
-        kernel_tmp /= Eng
+        kernel_positive = F.relu((x['kernel'] + 1) / 2)
+        kernel_scale = kernel_positive.sum(
+            axis=(-2, -1), keepdim=True
+        ).clamp_min(1e-12)
+        kernel_tmp = kernel_positive / kernel_scale
+
+        # The measurement standard deviation is known from the forward
+        # operator. A null tau therefore removes a redundant hand-tuned scale
+        # and ties the likelihood to the physical noise level.
+        tau = operator.sigma if self.tau is None else self.tau
 
         # Compute data-fitting gradient and loss
         data_fitting_grad, data_fitting_loss= operator.gradient(x, measurement, return_loss=True)
@@ -293,18 +308,50 @@ class MCMCSampler(nn.Module):
                 how=self.kernel_regularizer,
             )
         # --- Step 2: compute reg gradient from quadratic penalty term ---  k and res have a small gap
-        reg_grad = -(self.beta * (kernel_tmp - res) * Eng)
+        # Pull the quadratic HQS residual back through the simplex
+        # normalization and the (k + 1) / 2 latent map. The normalization
+        # Jacobian divides by the kernel mass; multiplying by the mass here
+        # reverses the chain rule and makes the update strongly scale
+        # dependent.
+        reg_grad_normalized = -self.beta * (kernel_tmp - res)
+        reg_grad_normalized -= (
+            reg_grad_normalized * kernel_tmp
+        ).sum((-2, -1), keepdim=True)
+        reg_grad = (
+            0.5 * reg_grad_normalized / kernel_scale
+        ) * (kernel_positive > 0).to(reg_grad_normalized.dtype)
+        if self.kernel_data_gradient == 'normalized':
+            direct_reg_grad = -self.beta * (
+                kernel_tmp - res
+            ) * kernel_scale
+        elif self.kernel_data_gradient == 'raw':
+            direct_reg_grad = reg_grad
+        else:
+            raise ValueError(
+                f"Unsupported kernel gradient mode: {self.kernel_data_gradient}"
+            )
+        self._kernel_prox = res.detach()
+        self._kernel_normalized_grad = data_fitting_grad.get(
+            'kernel_normalized', data_fitting_grad['kernel']
+        )
         # Compute terms for each component
         score_dict = {}
 
         for key in xt.keys():
-            data_term = -data_fitting_grad[key] / self.tau ** 2
+            gradient_key = (
+                'kernel_normalized'
+                if key == 'kernel' and self.kernel_data_gradient == 'normalized'
+                else key
+            )
+            data_term = -data_fitting_grad[gradient_key] / tau ** 2
             xt_term = (xt[key] - x[key]) / sigma ** 2
             prior_term = self.get_prior_score(x[key], x0hat[key], xt[key], model_dict[key], sigma, key)
 
             if key == 'kernel':
                 # Compute kernel huber reg_grad
-                score_dict[key] = data_term + xt_term + prior_term   + reg_grad
+                score_dict[key] = (
+                    data_term + xt_term + prior_term + direct_reg_grad
+                )
             elif key == 'image':
                 # tv_like = self.hyper_laplace_grad(x[key], p=2/3) * 1e-2
                 score_dict[key] = data_term + xt_term + prior_term
@@ -312,6 +359,104 @@ class MCMCSampler(nn.Module):
                 score_dict[key] = data_term + xt_term + prior_term
 
         return score_dict, data_fitting_loss
+
+    @staticmethod
+    def _normalize_kernel_latent(kernel):
+        positive = F.relu((kernel + 1.0) / 2.0)
+        return positive / positive.sum(
+            (-2, -1), keepdim=True
+        ).clamp_min(1e-12)
+
+    @staticmethod
+    def _project_simplex(values):
+        """Euclidean projection onto the probability simplex per kernel."""
+        flat = values.flatten(1)
+        ordered, _ = torch.sort(flat, dim=1, descending=True)
+        cumulative = ordered.cumsum(dim=1) - 1.0
+        indices = torch.arange(
+            1, flat.shape[1] + 1, device=flat.device, dtype=flat.dtype
+        )
+        condition = ordered - cumulative / indices > 0
+        rho = condition.sum(dim=1).clamp_min(1)
+        theta = (
+            cumulative.gather(1, (rho - 1).unsqueeze(1))
+            / rho.unsqueeze(1).to(flat.dtype)
+        )
+        return (flat - theta).clamp_min(0).view_as(values)
+
+    def _kernel_objective(self, kernel, image, x0hat_kernel, measurement,
+                          operator, sigma):
+        q = self._normalize_kernel_latent(kernel)
+        q0 = self._normalize_kernel_latent(x0hat_kernel)
+        tau = operator.sigma if self.tau is None else self.tau
+        data = operator.loss(
+            {'image': image, 'kernel': q}, measurement
+        ).sum() / (2.0 * tau ** 2)
+        prior = 0.5 * ((q - q0) ** 2).sum() / max(sigma ** 2, 1e-12)
+        prox = self._kernel_prox
+        regularization = 0.5 * self.beta * ((q - prox) ** 2).sum()
+        return data + prior + regularization
+
+    def _adaptive_kernel_update(self, x, score, x0hat, operator,
+                                measurement, sigma):
+        """Backtrack a simplex-projected kernel step without a fixed lr_k."""
+        kernel = x['kernel']
+        current = self._kernel_objective(
+            kernel, x['image'], x0hat['kernel'], measurement,
+            operator, sigma
+        )
+        direction = score['kernel']
+        direction_max = direction.abs().amax(
+            dim=tuple(range(1, direction.ndim)), keepdim=True
+        ).clamp_min(1e-12)
+
+        # The trust radius is normalized by the kernel-grid resolution. No
+        # absolute kernel learning rate or measurement-scale pair is needed.
+        _, _, height, width = kernel.shape
+        target_delta = self.kernel_trust_fraction / (height * width)
+        step = target_delta / direction_max
+        for _ in range(self.kernel_line_search_steps):
+            candidate = kernel + step * direction
+            candidate_q = self._normalize_kernel_latent(candidate)
+            candidate = 2.0 * candidate_q - 1.0
+            candidate_objective = self._kernel_objective(
+                candidate, x['image'], x0hat['kernel'], measurement,
+                operator, sigma
+            )
+            if torch.isfinite(candidate_objective) and candidate_objective <= current:
+                x['kernel'] = candidate
+                return
+            step = step * 0.5
+
+    def _block_simplex_update(self, x, x0hat, operator, measurement,
+                              sigma, image_lr, image_noise):
+        """Update the kernel on the simplex before refreshing image feedback."""
+        tau = operator.sigma if self.tau is None else self.tau
+        kernel = x['kernel']
+        q = self._normalize_kernel_latent(kernel)
+        q0 = self._normalize_kernel_latent(x0hat['kernel'])
+        data_grad = -self._kernel_normalized_grad / tau ** 2
+        prior_grad = (q0 - q) / max(sigma ** 2, 1e-12)
+        regularizer_grad = -self.beta * (q - self._kernel_prox)
+        kernel_lr = self.get_lr(0.0)['kernel']
+        q = self._project_simplex(
+            q + kernel_lr * (data_grad + prior_grad + regularizer_grad)
+        )
+        x['kernel'] = 2.0 * q - 1.0
+
+        # The image correction must use the kernel accepted in this block.
+        refreshed_data_grad = operator.gradient(
+            {'image': x['image'], 'kernel': x['kernel']}, measurement
+        )['image']
+        image_prior_grad = (
+            x0hat['image'] - x['image']
+        ) / max(sigma ** 2, 1e-12)
+        image_score = -refreshed_data_grad / tau ** 2 + image_prior_grad
+        x['image'] = (
+            x['image']
+            + image_lr * image_score
+            + np.sqrt(2.0 * image_lr) * image_noise
+        )
 
     def get_prior_score(self, x, x0hat, xt, model, sigma, key):
         if self.prior_solver[key] == 'score-min' or self.prior_solver[key] == 'score-t' or self.prior_solver[key] == 'gaussian':
@@ -353,7 +498,16 @@ class MCMCSampler(nn.Module):
     def mc_update(self, x, cur_score, lr, epsilon):
         """ Performs a single Monte Carlo update step (Langevin or HMC)."""
         if self.mc_algo == 'langevin':
-            x_new = {key: x[key] + lr[key] * cur_score[key] + np.sqrt(2 * lr[key]) * epsilon[key] for key in x.keys()}
+            x_new = {}
+            for key in x.keys():
+                noise_scale = (
+                    self.kernel_noise_scale if key == 'kernel' else 1.0
+                )
+                x_new[key] = (
+                    x[key]
+                    + lr[key] * cur_score[key]
+                    + noise_scale * np.sqrt(2 * lr[key]) * epsilon[key]
+                )
         elif self.mc_algo == 'hmc':  # (damping) hamiltonian monte carlo
             step_size = np.sqrt(lr)
             self.velocity = {key: self.momentum * self.velocity[key] + step_size * cur_score[key] + np.sqrt(
@@ -411,7 +565,27 @@ class MCMCSampler(nn.Module):
             cur_score, fitting_loss = self.score_fn(x, x0hat, model_dict, xt, operator, measurement, sigma, kernel_denoiser)
             epsilon = {key: torch.randn_like(x[key]) for key in x.keys()}
 
-            x = self.mc_update(x, cur_score, lr, epsilon)
+            if self.kernel_step_mode == 'manual':
+                x = self.mc_update(x, cur_score, lr, epsilon)
+            elif self.kernel_step_mode == 'block_simplex':
+                self._block_simplex_update(
+                    x, x0hat, operator, measurement, sigma,
+                    lr['image'], epsilon['image']
+                )
+            elif self.kernel_step_mode == 'trust_region':
+                image_score = {'image': cur_score['image']}
+                image = self.mc_update(
+                    {'image': x['image']}, image_score,
+                    {'image': lr['image']}, {'image': epsilon['image']}
+                )['image']
+                x['image'] = image
+                self._adaptive_kernel_update(
+                    x, cur_score, x0hat, operator, measurement, sigma
+                )
+            else:
+                raise ValueError(
+                    f"Unsupported kernel step mode: {self.kernel_step_mode}"
+                )
 
             # 早停检查
             if any(torch.isnan(x[key]).any() for key in x.keys()):

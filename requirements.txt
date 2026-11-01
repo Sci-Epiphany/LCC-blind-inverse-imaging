@@ -24,6 +24,7 @@ omegaconf
 packaging
 pillow
 piq
+pyiqa
 platformdirs
 prettytable
 protobuf

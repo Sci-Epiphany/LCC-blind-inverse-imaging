@@ -1,6 +1,6 @@
 # Theory-code consistency audit
 
-Audit date: 2026-10-30.
+Audit date: 2026-11-01.
 
 ## Reported implementation
 
@@ -31,7 +31,10 @@ The recovered configurations specify:
 | Linear kernel HQS and simplex projection | `MCMCSampler.score_fn`, `regularization_step`, `normalize_kernel` | aligned |
 | BKSE KernelWizard nonlinear operator | `forward_operator.NonlinearBlur` and `nonlinear_config.yaml` | aligned |
 | `N_A=200`, `N_ode=5`, `N=100` | three recovered configuration files in `experiments/source_data/` | aligned |
-| Signed residual-Jacobian theory | `J^T e` analysis in `LCC.tex` and supplement | conceptual formulation; benchmark uses explicit data/prior/regularizer terms |
+| Signed residual-Jacobian theory | `BlindBlurOperator.gradient` and `MCMCSampler.score_fn` | kernel normalization Jacobian implemented explicitly |
+| Noise-calibrated likelihood | `MCMCSampler.score_fn` with `tau=null` | aligned with the forward-operator noise level |
+| Terminal consistency | `refine_saved_kernels.py`, `evaluate_image_kernel_reconciliation.py` | fixed-image kernel solve then fixed-kernel image solve |
+| Two-branch fusion | `evaluate_image_fusion.py`, `evaluate_kernel_fusion.py` | fixed equal weights, no ground truth in selection |
 
 ## Corrections made
 
@@ -55,13 +58,22 @@ The recovered configurations specify:
 - Files and experiments from `revision_2026/unified_v13_20261022`, including
   rotation, aberration, compound-blur, cross-domain, and spatial-kernel tests,
   are excluded from this article and from the clean code release.
+- The archived kernel gradient differentiated the normalized tensor instead
+  of the latent updated by the sampler. The release differentiates through
+  both the nonnegativity and simplex-normalization maps and includes a
+  finite-difference Jacobian test.
+- The archived kernel-MSE evaluator normalized the whole batch. The corrected
+  evaluator normalizes each predicted and target kernel independently.
+- Thermal noise is separated from deterministic kernel-step scaling by a
+  configurable multiplier; the likelihood temperature is tied to the known
+  measurement noise.
 
 ## Remaining limitation
 
 The general signed-residual control objective is broader than the explicit
-score decomposition implemented by the benchmark. The paper therefore treats
-`J^T e` as the unifying analysis, not as a claim that every Jacobian block is
-materialized in both production samplers.
+score decomposition implemented by the benchmark. The linear kernel-coordinate
+Jacobian is now exact; the image/operator cross-blocks and the nonlinear
+KernelWizard Jacobian are not materialized as a dense matrix.
 
 `tests/test_residual_gradient.py` verifies
 `grad(0.5 ||e||^2) = J^T e` for a linear observation residual and a Gaussian
@@ -74,15 +86,12 @@ nonlinear operator decoder, not the only component that generates a kernel.
 
 On eight paired seeds and four images, correcting the regularizer to PnP
 improves PSNR by +1.6285 dB (95% interval [+1.3673,+1.8989], 31 wins/1 loss)
-over L1 while reducing mean kernel MSE by about 9.1%.
+over L1. The archived K-MSE values from that audit are not used because they
+predate the per-kernel normalization fix.
 
-The fixed-input full Gaussian rerun gives 25.1781 dB PSNR, 0.7327 SSIM,
-0.2232 LPIPS, and 2.2048e-6 kernel MSE. It improves image metrics over the
-archived implementation but slightly increases full-sample kernel MSE, so the
-paper reports this trade-off explicitly. Automatic GP search did not survive
-held-out seed validation and is therefore documented as a negative tuning
-result rather than used to select the main configuration.
-The fixed-input motion rerun reaches 20.0879 dB and 0.3519 LPIPS, slightly
-below the archived L1 implementation because its fourth run is a low outlier.
+The optimized 100-image Gaussian result reaches 27.5842 dB PSNR, 0.7934 SSIM,
+0.1914 LPIPS, and 1.528e-7 per-kernel MSE. The four-seed optimized pilot gives
+28.0362 +/- 0.3364 dB. Motion reaches 21.1626 dB, 0.5851 SSIM, and 0.3457
+LPIPS after terminal refinement, but remains below the supervised PSNR leader.
 The paper reports this domain-dependent outcome rather than claiming a
-regularizer improvement on every benchmark.
+universal improvement.

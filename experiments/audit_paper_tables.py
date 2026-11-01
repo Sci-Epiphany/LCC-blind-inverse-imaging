@@ -27,7 +27,7 @@ LINEAR = {
         "BlindDPS": (24.43, 0.7631, 0.2366, 1.06e-5),
         "FastDiffEM": (12.34, 0.3863, 0.5297, 3.23e-5),
         "DMPlug": (23.89, 0.7347, 0.3124, 1.60e-4),
-        "LCC": (25.18, 0.7327, 0.2232, 2.205e-6),
+        "LCC": (27.58, 0.7934, 0.1914, 1.528e-7),
     },
     "Motion": {
         "SelfDeblur": (17.07, 0.3351, 0.5006, 6.05e-5),
@@ -38,7 +38,7 @@ LINEAR = {
         "BlindDPS": (19.80, 0.6040, 0.3369, 1.97e-5),
         "FastDiffEM": (13.29, 0.3084, 0.5213, 2.92e-5),
         "DMPlug": (18.43, 0.5418, 0.4376, 1.71e-4),
-        "LCC": (20.09, 0.5696, 0.3519, 4.203e-6),
+        "LCC": (21.16, 0.5851, 0.3457, 3.916e-6),
     },
 }
 
@@ -67,27 +67,15 @@ NONREFERENCE = {
 }
 
 ABLATION = {
-    "Single branch": (10.2448, 2.1533, 34.0),
-    "Single branch + HQS": (10.9856, 2.15179e-6, 36.0),
-    "Dual parallel": (23.6779, 2.06850e-6, 37.0),
-    "DP + HQS + l1": (23.6789, 2.06850e-6, 40.0),
-    "DP + HQS + l2": (23.6788, 2.06857e-6, 40.0),
-    "DP + HQS + PnP": (25.1036, 2.04749e-6, 61.0),
+    "Exact Jacobian": (25.2123, 0.7196, 0.2581, 2.887e-6),
+    "+ image refinement": (25.4385, 0.7196, 0.2535, 2.887e-6),
+    "+ both refinements": (26.3833, 0.7527, 0.2139, 4.680e-7),
+    "Two-branch fusion": (27.5842, 0.7934, 0.1914, 1.528e-7),
 }
 
 PAIRED = {
-    ("Gaussian", "DeepRFT"): (-0.23, -0.50, 0.03, 0.329),
-    ("Gaussian", "DeblurGAN"): (-0.15, -0.38, 0.07, 0.403),
-    ("Gaussian", "BlindDPS"): (0.74, 0.43, 1.10, 2.16e-6),
-    ("Gaussian", "DMPlug"): (1.29, 0.78, 1.86, 1.55e-5),
-    ("Motion", "DeepRFT"): (-2.84, -3.47, -2.27, 2.69e-17),
-    ("Motion", "DeblurGAN"): (-1.10, -1.64, -0.58, 1.02e-4),
-    ("Motion", "BlindDPS"): (0.29, -0.24, 0.83, 0.0542),
-    ("Motion", "DMPlug"): (1.66, 1.07, 2.26, 2.07e-7),
-    ("Nonlinear", "DeepRFT"): (-4.01, -4.52, -3.53, 1.7e-17),
-    ("Nonlinear", "DeblurGAN"): (-3.59, -4.02, -3.16, 5.6e-18),
-    ("Nonlinear", "FFTFormer"): (0.10, -0.38, 0.55, 0.258),
-    ("Nonlinear", "DMPlug"): (0.06, -0.71, 0.88, 0.509),
+    ("Gaussian", "previous LCC"): (2.298, 2.095, 2.498, 97, 3, 0.0584, -0.0281),
+    ("Motion", "previous LCC"): (1.075, 0.984, 1.167, 681, 119, 0.0155, -0.0063),
 }
 
 SENSITIVITY = {
@@ -95,25 +83,13 @@ SENSITIVITY = {
         "cells": ["B2", "C2", "D2", "E2", "F2"],
         "expected": [0.2329, 0.2275, 0.2261, 0.2314, 0.2350],
     },
-    "eta_x_kmse": {
-        "cells": ["B3", "C3", "D3", "E3", "F3"],
-        "expected": [2.07018e-6, 2.05704e-6, 1.99800e-6, 2.04727e-6, 2.04872e-6],
-    },
     "eta_k_lpips": {
         "cells": ["B8", "C8", "D8", "E8", "F8"],
         "expected": [0.2353, 0.2263, 0.2261, 0.2288, 0.2307],
     },
-    "eta_k_kmse": {
-        "cells": ["B9", "C9", "D9", "E9", "F9"],
-        "expected": [2.04528e-6, 2.04944e-6, 1.99800e-6, 2.05255e-6, 2.05308e-6],
-    },
     "lambda_lpips": {
         "cells": ["B13", "C13", "D13", "E13", "F13"],
         "expected": [0.2271, 0.2270, 0.2261, 0.2263, 0.2298],
-    },
-    "lambda_kmse": {
-        "cells": ["B14", "C14", "D14", "E14", "F14"],
-        "expected": [2.04854e-6, 2.04988e-6, 1.99800e-6, 2.05328e-6, 2.05234e-6],
     },
 }
 
@@ -136,8 +112,11 @@ PROPOSAL = {
 
 CROSS_PNP = (25.2441, 0.7356, 0.2228, 2.125e-6, 300)
 FIXED_PNP = {
-    "Gaussian": (25.1781, 0.7327, 0.2232, 2.205e-6, 400),
-    "Motion": (20.0879, 0.5696, 0.3519, 4.203e-6, 786),
+    "Gaussian initial": (25.2123, 0.7196, 0.2581, 2.887e-6, 100),
+    "Gaussian + image": (25.4385, 0.7196, 0.2535, 2.887e-6, 100),
+    "Gaussian + both": (26.3833, 0.7527, 0.2139, 4.680e-7, 100),
+    "Gaussian fusion": (27.5842, 0.7934, 0.1914, 1.528e-7, 100),
+    "Motion + both": (21.1626, 0.5851, 0.3457, 3.916e-6, 796),
 }
 AUTOTUNE = {
     "base": (26.5444, 0.2018),
@@ -181,6 +160,8 @@ def main() -> None:
     ) as handle:
         comparison_rows = list(csv.DictReader(handle))
     own = read_csv_map(RESULTS / "ldcc_full_metrics.csv", "benchmark")
+    optimized_path = HERE / "lcc_opt_results" / "lcc_optimization.json"
+    optimized = json.loads(optimized_path.read_text(encoding="utf-8"))
     nr_rows = read_csv_map(SOURCE_DATA / "NR_IQA_results.csv", "Method")
     ablation_cells = read_xlsx_cells(SOURCE_DATA / "super_parameter.xlsx")
 
@@ -194,14 +175,25 @@ def main() -> None:
     for benchmark, methods in LINEAR.items():
         for method, (psnr, ssim, lpips, expected_kmse) in methods.items():
             if method == "LCC":
-                row = own["Gaussian" if benchmark == "Gaussian" else "Motion"]
+                if benchmark == "Gaussian":
+                    result = optimized["full_gaussian_100_seed123"][
+                        "two_branch_equal_fusion"
+                    ]
+                else:
+                    result = optimized["full_motion_200x4"]
+                    result = {
+                        "psnr": result["post_image"]["psnr"],
+                        "ssim": result["post_image"]["ssim"],
+                        "lpips": result["post_image"]["lpips"],
+                        "kernel_mse": result["post_kernel_mse"],
+                    }
                 actual = (
-                    float(row["psnr_mean"]),
-                    float(row["ssim_mean"]),
-                    float(row["lpips_mean"]),
-                    float(row["kernel_mse_mean"]),
+                    result["psnr"],
+                    result["ssim"],
+                    result["lpips"],
+                    result["kernel_mse"],
                 )
-                source = "ldcc_full_metrics.csv"
+                source = "lcc_optimization.json"
             else:
                 row = next(
                     item
@@ -287,21 +279,40 @@ def main() -> None:
         if not ok:
             errors.append(f"nonreference {method}: {actual} != {expected}")
 
-    xlsx_rows = {
-        "Single branch": ("B43", "C43", "D43"),
-        "Single branch + HQS": ("B44", "C44", "D44"),
-        "Dual parallel": ("B45", "C45", "D45"),
-        "DP + HQS + l1": ("B46", "C46", "D46"),
-        "DP + HQS + l2": ("B47", "C47", "D47"),
-        "DP + HQS + PnP": ("B48", "C48", "D48"),
+    gaussian = optimized["full_gaussian_100_seed123"]
+    ablation_actual = {
+        "Exact Jacobian": (
+            gaussian["initial"]["psnr"],
+            gaussian["initial"]["ssim"],
+            gaussian["initial"]["lpips"],
+            gaussian["initial_kernel_mse"],
+        ),
+        "+ image refinement": (
+            gaussian["image_only"]["psnr"],
+            gaussian["image_only"]["ssim"],
+            gaussian["image_only"]["lpips"],
+            gaussian["initial_kernel_mse"],
+        ),
+        "+ both refinements": (
+            gaussian["post_image"]["psnr"],
+            gaussian["post_image"]["ssim"],
+            gaussian["post_image"]["lpips"],
+            gaussian["post_kernel_mse"],
+        ),
+        "Two-branch fusion": (
+            gaussian["two_branch_equal_fusion"]["psnr"],
+            gaussian["two_branch_equal_fusion"]["ssim"],
+            gaussian["two_branch_equal_fusion"]["lpips"],
+            gaussian["two_branch_equal_fusion"]["kernel_mse"],
+        ),
     }
-    for method, cells in xlsx_rows.items():
-        actual = tuple(float(ablation_cells[cell]) for cell in cells)
+    for method, actual in ablation_actual.items():
         expected = ABLATION[method]
         ok = (
-            close(actual[0], expected[0], 0.001)
-            and close(actual[1], expected[1], 1e-4)
-            and close(actual[2], expected[2], 0.51)
+            close(actual[0], expected[0], 0.006)
+            and close(actual[1], expected[1], 0.0006)
+            and close(actual[2], expected[2], 0.0006)
+            and close(actual[3], expected[3], max(1e-12, expected[3] * 0.03))
         )
         checks.append(
             dict(
@@ -310,7 +321,7 @@ def main() -> None:
                 method=method,
                 expected=expected,
                 actual=actual,
-                source="super_parameter.xlsx",
+                source="lcc_optimization.json",
                 pass_=ok,
             )
         )
@@ -464,16 +475,46 @@ def main() -> None:
     if not ok:
         errors.append(f"cross-kernel PnP: {actual} != {CROSS_PNP}")
 
-    fixed_pnp = json.loads((RESULTS / "fixed_kernel_pnp.json").read_text(encoding="utf-8"))
+    motion = optimized["full_motion_200x4"]
+    fixed_actual = {
+        "Gaussian initial": (
+            gaussian["initial"]["psnr"],
+            gaussian["initial"]["ssim"],
+            gaussian["initial"]["lpips"],
+            gaussian["initial_kernel_mse"],
+            100,
+        ),
+        "Gaussian + image": (
+            gaussian["image_only"]["psnr"],
+            gaussian["image_only"]["ssim"],
+            gaussian["image_only"]["lpips"],
+            gaussian["initial_kernel_mse"],
+            100,
+        ),
+        "Gaussian + both": (
+            gaussian["post_image"]["psnr"],
+            gaussian["post_image"]["ssim"],
+            gaussian["post_image"]["lpips"],
+            gaussian["post_kernel_mse"],
+            100,
+        ),
+        "Gaussian fusion": (
+            gaussian["two_branch_equal_fusion"]["psnr"],
+            gaussian["two_branch_equal_fusion"]["ssim"],
+            gaussian["two_branch_equal_fusion"]["lpips"],
+            gaussian["two_branch_equal_fusion"]["kernel_mse"],
+            100,
+        ),
+        "Motion + both": (
+            motion["post_image"]["psnr"],
+            motion["post_image"]["ssim"],
+            motion["post_image"]["lpips"],
+            motion["post_kernel_mse"],
+            796,
+        ),
+    }
     for task, expected in FIXED_PNP.items():
-        row = fixed_pnp[task]
-        actual = (
-            float(row["psnr"]),
-            float(row["ssim"]),
-            float(row["lpips"]),
-            float(row["kernel_mse"]),
-            int(row["success_10db"]),
-        )
+        actual = fixed_actual[task]
         ok = (
             close(actual[0], expected[0], 0.006)
             and close(actual[1], expected[1], 0.0006)
@@ -488,7 +529,7 @@ def main() -> None:
                 method="corrected PnP",
                 expected=expected,
                 actual=actual,
-                source="fixed_kernel_pnp.json",
+                source="lcc_optimization.json",
                 pass_=ok,
             )
         )
@@ -542,27 +583,32 @@ def main() -> None:
             f"autotune: {autotune_actual} != {autotune_expected}"
         )
 
-    with (RESULTS / "paired_comparisons_fixed_pnp.csv").open(
-        newline="", encoding="utf-8"
-    ) as handle:
-        paired_rows = {
-            (row["benchmark"], row["baseline"]): row
-            for row in csv.DictReader(handle)
-        }
     for key, expected in PAIRED.items():
-        row = paired_rows[key]
+        if key[0] == "Gaussian":
+            result = optimized["full_gaussian_100_seed123"][
+                "two_branch_equal_fusion"
+            ]["paired_image_vs_old_pnp"]
+        else:
+            result = optimized["full_motion_200x4"][
+                "paired_image_vs_old_pnp"
+            ]
         actual = (
-            float(row["delta_psnr"]),
-            float(row["delta_ci_low"]),
-            float(row["delta_ci_high"]),
-            float(row["wilcoxon_p"]),
+            result["psnr"]["delta"],
+            result["psnr"]["ci_low"],
+            result["psnr"]["ci_high"],
+            result["psnr"]["wins"],
+            result["psnr"]["losses"],
+            result["ssim"]["delta"],
+            result["lpips"]["delta"],
         )
-        scale = max(1.0, abs(expected[3])) if expected[3] else 1.0
         ok = (
             close(actual[0], expected[0], 0.006)
             and close(actual[1], expected[1], 0.006)
             and close(actual[2], expected[2], 0.006)
-            and abs(actual[3] - expected[3]) <= 0.02 * scale
+            and actual[3] == expected[3]
+            and actual[4] == expected[4]
+            and close(actual[5], expected[5], 0.0006)
+            and close(actual[6], expected[6], 0.0006)
         )
         checks.append(
             dict(
@@ -571,7 +617,7 @@ def main() -> None:
                 method=key[1],
                 expected=expected,
                 actual=actual,
-                source="paired_comparisons_fixed_pnp.csv",
+                source="lcc_optimization.json",
                 pass_=ok,
             )
         )

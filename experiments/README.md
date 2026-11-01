@@ -4,6 +4,32 @@ This directory contains the scripts and compact metric records for the
 additional LCC experiments. Large checkpoints, datasets, generated images, and
 paper figures are intentionally excluded.
 
+## Optimized implementation audit
+
+The release includes an exact kernel-coordinate Jacobian, noise-calibrated
+likelihood scaling, separate kernel thermal noise, fixed-image kernel
+refinement, fixed-kernel image reconciliation, and label-free two-branch
+fusion.
+
+```bash
+bash run_remote_kernel_ablation.sh 4e-7 20 2000000 0.02 1 100 50 20 optimized 0.1 123
+python refine_saved_kernels.py ...
+python evaluate_image_kernel_reconciliation.py ...
+python analyze_lcc_optimization.py
+```
+
+Compact results and the exact result-file mapping are in
+`lcc_opt_results/README.md`. The optimized Gaussian fusion obtains
+27.5842 dB PSNR and 1.528e-7 per-kernel MSE on 100 fixed inputs. Motion
+improves from 20.0879 to 21.1626 dB after the same consistency refinement.
+The `trust_region` and `block_simplex` kernel-step modes in the sampler are
+retained as negative controls: their monotone local objectives destabilized
+the coupled image state, so they are not used by any headline result.
+
+Archived K-MSE values produced by the old whole-batch normalization are not
+used. `recompute_kernel_metrics.py` normalizes each predicted and ground-truth
+kernel independently.
+
 ## Kernel regularizer
 
 The linear sampler supports `kernel_regularizer: pnp|l1|l2`. The paper

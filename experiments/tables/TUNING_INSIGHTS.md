@@ -1,5 +1,19 @@
 # Kernel-generation and scheduler audit
 
+## Optimized implementation update
+
+The earlier sweeps below were produced before two implementation audits.
+First, the kernel gradient omitted the nonnegativity and unit-mass
+normalization Jacobian. Second, the evaluator normalized all kernels in a
+batch together. The optimized release corrects both and adds terminal
+consistency refinement.
+
+The current Gaussian result is 27.5842 dB PSNR, 0.7934 SSIM, 0.1914 LPIPS,
+and 1.528e-7 per-kernel MSE after equal fusion of two coordinate branches.
+The four-seed optimized pilot gives 28.0362 +/- 0.3364 dB. Motion reaches
+21.1626 dB, 0.5851 SSIM, and 0.3457 LPIPS. Exact source files and paired
+statistics are documented in `experiments/results/lcc_optimization.*`.
+
 ## What is already implemented
 
 The linear kernel is already diffusion-generated from Gaussian noise:

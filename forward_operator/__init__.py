@@ -353,11 +353,12 @@ class BlindBlurOperator(Operator):
         """
         # Clone and detach the image and kernel, and require gradient for the image
         image_tmp = x['image'].clone().detach().requires_grad_(True)
-        kernel_tmp = x['kernel'].clone().detach().requires_grad_(True)
+        kernel_latent = x['kernel'].clone().detach().requires_grad_(True)
 
-        kernel_tmp = F.relu((kernel_tmp + 1) / 2)
-        # kernel_tmp = ((kernel_tmp + 1) / 2).clamp(min=0, max=1)
-        kernel_tmp = kernel_tmp / kernel_tmp.sum((-2, -1), keepdim=True)
+        kernel_positive = F.relu((kernel_latent + 1) / 2)
+        kernel_tmp = kernel_positive / kernel_positive.sum(
+            (-2, -1), keepdim=True
+        ).clamp_min(1e-12)
 
         x_tmp = {'image': image_tmp, 'kernel': kernel_tmp}
 
@@ -365,12 +366,18 @@ class BlindBlurOperator(Operator):
         loss = self.loss(x_tmp, y).sum()
 
         # Compute the gradient with respect to the image and kernel
-        gradients = torch.autograd.grad(loss, [image_tmp, kernel_tmp])
+        # Differentiate through the nonnegativity and normalization maps. The
+        # sampler updates the unconstrained kernel latent, so a gradient with
+        # respect to the normalized tensor would silently omit this Jacobian.
+        image_grad, kernel_latent_grad, kernel_normalized_grad = (
+            torch.autograd.grad(loss, [image_tmp, kernel_latent, kernel_tmp])
+        )
 
         # Create a dictionary to store the gradients
         grad_dict = {
-            'image': gradients[0],
-            'kernel': gradients[1]
+            'image': image_grad,
+            'kernel': kernel_latent_grad,
+            'kernel_normalized': kernel_normalized_grad,
         }
 
         if return_loss:

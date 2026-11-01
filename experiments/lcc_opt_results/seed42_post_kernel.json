@@ -1,0 +1,30 @@
+{
+  "images": 4,
+  "sigma": 0.02,
+  "beta": 100000.0,
+  "iterations": 20,
+  "initial_mse": 4.1790231080085505e-06,
+  "refined_mse": 3.6732856756316323e-07,
+  "samples": {
+    "00000_run0000.png": {
+      "initial_mse": 2.957260903713177e-06,
+      "refined_mse_in_memory": 4.784072302754794e-07,
+      "refined_mse": 3.331307141252182e-07
+    },
+    "00001_run0000.png": {
+      "initial_mse": 8.619428626843728e-06,
+      "refined_mse_in_memory": 4.823750714422204e-07,
+      "refined_mse": 3.5787127217190573e-07
+    },
+    "00002_run0000.png": {
+      "initial_mse": 2.8098636448703473e-06,
+      "refined_mse_in_memory": 5.303811008161574e-07,
+      "refined_mse": 4.579007679694769e-07
+    },
+    "00003_run0000.png": {
+      "initial_mse": 2.3295392566069495e-06,
+      "refined_mse_in_memory": 4.4855011083200225e-07,
+      "refined_mse": 3.204115159860521e-07
+    }
+  }
+}

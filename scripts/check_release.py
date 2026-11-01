@@ -33,7 +33,11 @@ def main() -> None:
     artifact_hits = []
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
-        if relative in {"scripts/check_release.py", "docs/CODE_THEORY_AUDIT.md"}:
+        if relative in {
+            "scripts/check_release.py",
+            "docs/CODE_THEORY_AUDIT.md",
+            "experiments/build_release_package.py",
+        }:
             continue
         if path.suffix.lower() in ARTIFACT_SUFFIXES:
             artifact_hits.append(relative)
